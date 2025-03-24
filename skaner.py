@@ -17,19 +17,22 @@ def scanner(string):
         elif tokens[i] == '-':
             number = ""
             i += 1
+            if i >= len(tokens):
+                print("- --> minus") 
+                continue
             while tokens[i].isnumeric() or tokens[i] == ',': 
                 number += tokens[i]
                 i += 1
             if tokens[i] == 'e':
                 number += tokens[i]
                 i += 1
-                while tokens[i].isnumeric(): 
+                while i < len(tokens) and (tokens[i].isnumeric() or tokens[i] == '-'): 
                     number += tokens[i]
                     i += 1
                 i -= 1
                 number = '-' + number
                 print(number, "--> scientific notation")
-            elif tokens[i] == '(' or tokens[i].isnumeric():
+            elif (tokens[i] == '(' or tokens[i].isnumeric()):
                 i -= 1
                 print("- --> minus") 
             else:
@@ -53,9 +56,10 @@ def scanner(string):
             print("ERROR")
 
 
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    scanner("23+786-(87)/(-8,59e54)")
+    scanner("23+786-(87)/(-8,59e-54)")
+    scanner("567g")
+    scanner("*+-")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
