@@ -3,7 +3,7 @@
 - Mateusz Bielówka mbielowka@student.agh.edu.pl
 
 ## Opis
-- Język wykorzystuje elementy języka włoskiego języku C-like i Ady, co sprawia, że jest bardziej zrozumiały dla osób znających te języki.
+- Język wykorzystuje elementy języka włoskiego, języków C-like i Ady, co sprawia, że będzie on bardziej zrozumiały dla osób znających te języki.
 - Język implementacji - `Python`
 - Generator skanerów i parserów - `ANTLR4`
 
