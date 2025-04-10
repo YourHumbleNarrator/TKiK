@@ -1,4 +1,4 @@
-# Kompilator C do własnego języka
+# Kompilator własnego języka do C
 - Berenike Banek berenike@student.agh.edu.pl
 - Mateusz Bielówka mbielowka@student.agh.edu.pl
 
