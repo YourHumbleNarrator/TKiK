@@ -11,10 +11,10 @@
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| kw_FUNCTION | Funzione | Słowo kluczowe dla funkcji |
-| kw_BEGIN | inizio | Rozpoczęcie bloku kodu |
-| kw_END | fine | Zakończenie bloku kodu |
-| kw_IF | se | Słowo kluczowe dla warunku |
+| FUNCTION_KW | Funzione | Słowo kluczowe dla funkcji |
+| BEGIN_KW | inizio | Rozpoczęcie bloku kodu |
+| END_KW | fine | Zakończenie bloku kodu |
+| IF_KW | se | Słowo kluczowe dla warunku |
 | kw_DO | allora/fai | Słowo kluczowe użyte po warunku przed instrukcją warunkową |
 | kw_ELSE | altrimenti | Alternatywna instrukcja w konstrukcji if-else |
 | kw_FOR | per | Słowo kluczowe dla pętli typu FOR |
