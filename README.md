@@ -39,7 +39,6 @@
 | lit_INTEGER | [0-9]+ | Literał dla liczby całkowitej |
 | lit_FLOAT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
 | lit_CHAR | '[^']' | Literał dla znaku |
-| math_operators | [\\+ - \\* / %] | Operatory matematyczne |
 | bool_operators | ['=' '<=' '>=' '!=' '>''<'] | Operatory logiczne |
 | bit_operators | ['\|''&''>>''<<''^'] | Operatory bitowe |
 | logical_operators | ['e\\'' 'o\\''] | Operatory logiczne AND i OR (np. vero o' falso) |
@@ -50,6 +49,14 @@
 | separator_COMMA | , | Separator ',' |
 | separator_SEMICOLON | ; | Separator ';' |
 | kw_COMMENT_LINE | !! | Komentarz jednoliniowy |
+
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
+| math_op_add | \\+ | Operator dodawania |
+| math_op_sub | - | Operator odejmowania |
+| math_op_mul | \\* | Operator mnożenia |
+| math_op_div | / | Operator dzielenia |
+| math_op_mod | % | Operator modulo |
 
 ## Wstępne uwagi:
 - `inizio` - `fine` oddzielają ciąg poleceń wykonywany wramach danej pętli/funkcji/instrukcji warunkowej
