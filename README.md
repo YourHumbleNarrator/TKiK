@@ -39,9 +39,6 @@
 | lit_INTEGER | [0-9]+ | Literał dla liczby całkowitej |
 | lit_FLOAT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
 | lit_CHAR | '[^']' | Literał dla znaku |
-| bool_operators | ['=' '<=' '>=' '!=' '>''<'] | Operatory logiczne |
-| bit_operators | ['\|''&''>>''<<''^'] | Operatory bitowe |
-| logical_operators | ['e\\'' 'o\\''] | Operatory logiczne AND i OR (np. vero o' falso) |
 | br_L_PAREN | \\( | Nawias'(' |
 | br_R_PAREN | \\) | Nawias ')' |
 | br_L_SQ | \\[ | Nawias '[' |
@@ -57,6 +54,28 @@
 | math_op_mul | \\* | Operator mnożenia |
 | math_op_div | / | Operator dzielenia |
 | math_op_mod | % | Operator modulo |
+
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
+| bool_op_eq | '=' | Operator równne |
+| bool_ope_less_eq | '<=' | Operator mniejsze lub równe |
+| bool_op_greater_eq | '>=' | Operator większe lub równe |
+| bool_op_not_eq | '!=' | Operator różne |
+| bool_op_greater | '>' | Operator większe |
+| bool_op_less | '<' | Operator mniejsze |
+
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
+| bit_op_or | '\|' | Operator bitowy lub |
+| bit_op_and | '&' | Operator bitowy i |
+| bit_op_right_shift | '>>' | Operator bitowy prawy shift |
+| bit_op_left_shift | '<<' | Operator bitowy lewy shift |
+| bit_op_xor | '^' | Operator bitowy xor |
+
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
+| logical_op_and | 'e\\'' | Operator logiczny AND i OR (np. vero o' falso) |
+| logical_op_or | 'o\\'' | Operator logiczny AND i OR (np. vero o' falso) |
 
 ## Wstępne uwagi:
 - `inizio` - `fine` oddzielają ciąg poleceń wykonywany wramach danej pętli/funkcji/instrukcji warunkowej
