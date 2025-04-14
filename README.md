@@ -26,6 +26,15 @@
 | THROW_KW | lancia | Słowo kluczowe do rzucania wyjątków |
 | RETURN_KW | ritorna | Zwracanie wartości |
 | NEW_KW | nuovo | Słowo kluczowe do tworzenia nowych obiektów |
+| IDENTFIER | [a-zA-Z_][a-zA-Z0-9_]* | Identyfikator zmiennej |
+| INTEGER_LIT | [0-9]+ | Literał dla liczby całkowitej |
+| FLOAT_LIT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
+| TCHAR_LIT | '[^']' | Literał dla znaku |
+| COMMENT_LINE | !! | Komentarz jednoliniowy |
+
+### Typy zmiennych
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
 | SHORT_TP | Piccolo | Typ danych dla niewielkiej liczby całkowitej |
 | INT_TP | Intero | Typ danych dla liczby całkowitej |
 | FLOAT_TP | Flottante | Typ danych dla liczby zmiennoprzecinkowej |
@@ -35,47 +44,52 @@
 | LONG_TP | Grande | Typ danych dla dużej liczby całkowitej |
 | BOOLEAN_LIT_TRUE | vero | Literał dla wartości true |
 | BOOLEAN_LIT_FALSE | falso | Literał dla wartości false |
-| IDENTFIER | [a-zA-Z_][a-zA-Z0-9_]* | Identyfikator zmiennej |
-| INTEGER_LIT | [0-9]+ | Literał dla liczby całkowitej |
-| FLOAT_LIT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
-| TCHAR_LIT | '[^']' | Literał dla znaku |
-| L_PAREN_BR | \\( | Nawias'(' |
-| R_PAREN_BR | \\) | Nawias ')' |
-| L_SQ_BR | \\[ | Nawias '[' |
-| R_SQ_BR | \\] | Nawias ']' |
-| COMMA_SEP | , | Separator ',' |
-| SEMICOLON_SEP | ; | Separator ';' |
-| COMMENT_LINE | !! | Komentarz jednoliniowy |
 
+### Operatory matematyczne
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| MATH_ADD_OP | \\+ | Operator dodawania |
-| MATH_SUB_OP | - | Operator odejmowania |
-| MATH_MUL_OP | \\* | Operator mnożenia |
-| MATH_DIV_OP | / | Operator dzielenia |
-| MATH_MOD_OP | % | Operator modulo |
+| ADD_MATH_OP | \\+ | Operator dodawania |
+| SUB_MATH_OP | - | Operator odejmowania |
+| MUL_MATH_OP | \\* | Operator mnożenia |
+| DIV_MATH_OP | / | Operator dzielenia |
+| MOD_MATH_OP | % | Operator modulo |
+| OR_BIT_OP | '\|' | Operator bitowy lub |
+| AND_BIT_OP | '&' | Operator bitowy i |
+| RIGHT_SHIFT_BIT_OP | '>>' | Operator bitowy prawy shift |
+| LEFT_SHIFT_BIT_OP | '<<' | Operator bitowy lewy shift |
+| XOR_BIT_OP | '^' | Operator bitowy xor |
 
+### Operatory boolean
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| BOOL_EQ_OP | '=' | Operator równne |
-| BOOL_LESS_EQ_OP | '<=' | Operator mniejsze lub równe |
-| BOOL_GREATER_EQ_OP | '>=' | Operator większe lub równe |
-| BOOL_NOT_EQ_OP | '!=' | Operator różne |
-| BOOL_GREATER_OP | '>' | Operator większe |
-| BOOL_LESS_OP | '<' | Operator mniejsze |
+| EQUAL_BOOL_OP | '=' | Operator równne |
+| LESS_EQ_BOOL_OP | '<=' | Operator mniejsze lub równe |
+| GREATER_EQ_BOOL_OP | '>=' | Operator większe lub równe |
+| NOT_EQ_BOOL_OP | '!=' | Operator różne |
+| GREATER_BOOL_OP | '>' | Operator większe |
+| LESS_BOOL_OP | '<' | Operator mniejsze |
 
+### Operatory logiczne
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| BIT_OR_OP | '\|' | Operator bitowy lub |
-| BIT_AND_OP | '&' | Operator bitowy i |
-| BIT_RIGHT_SHIFT_OP | '>>' | Operator bitowy prawy shift |
-| BIT_LEFT_SHIFT_OP | '<<' | Operator bitowy lewy shift |
-| BIT_XOR_OP | '^' | Operator bitowy xor |
+| AND_LOGICAL_OP | 'e\\'' | Operator logiczny AND i OR (np. vero o' falso) |
+| OR_LOGICAL_OP | 'o\\'' | Operator logiczny AND i OR (np. vero o' falso) |
 
+### Nawiasy
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| LOGICAL_AND_OP | 'e\\'' | Operator logiczny AND i OR (np. vero o' falso) |
-| LOGICAL_OR_OP | 'o\\'' | Operator logiczny AND i OR (np. vero o' falso) |
+| LEFT_PAREN | \\( | Nawias'(' |
+| RIGHT_PAREN | \\) | Nawias ')' |
+| LEFT_SQUARE | \\[ | Nawias '[' |
+| RIGHT_SQUARE | \\] | Nawias ']' |
+
+### Separatory
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
+| COMMA | , | Separator ',' |
+| SEMICOLON | ; | Separator ';' |
+| DOT | . | Separator '.' |
+| COLON | : | Separator ':' |
 
 ## Wstępne uwagi:
 - `inizio` - `fine` oddzielają ciąg poleceń wykonywany wramach danej pętli/funkcji/instrukcji warunkowej
