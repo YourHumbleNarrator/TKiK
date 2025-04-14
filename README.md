@@ -15,67 +15,67 @@
 | BEGIN_KW | inizio | Rozpoczęcie bloku kodu |
 | END_KW | fine | Zakończenie bloku kodu |
 | IF_KW | se | Słowo kluczowe dla warunku |
-| kw_DO | allora/fai | Słowo kluczowe użyte po warunku przed instrukcją warunkową |
-| kw_ELSE | altrimenti | Alternatywna instrukcja w konstrukcji if-else |
-| kw_FOR | per | Słowo kluczowe dla pętli typu FOR |
-| kw_WHILE | mentre | Słowo kluczowe dla pętli typu WHILE |
-| kw_CONTINUE | continua | Skok do początku pętli |
-| kw_BRAKE | ferma | Przerwanie pętli |
-| kw_TRY | prova | Słowo kluczowe dla bloku try |
-| kw_CATCH | cattura | Słowo kluczowe dla bloku catch |
-| kw_THROW | lancia | Słowo kluczowe do rzucania wyjątków |
-| kw_RETURN | ritorna | Zwracanie wartości |
-| kw_NEW | nuovo | Słowo kluczowe do tworzenia nowych obiektów |
-| tp_SHORT | Piccolo | Typ danych dla niewielkiej liczby całkowitej |
-| tp_INT | Intero | Typ danych dla liczby całkowitej |
-| tp_FLOAT | Flottante | Typ danych dla liczby zmiennoprzecinkowej |
-| tp_DOUBLE | Doppio | Typ danych dla podwójnej precyzji |
-| tp_CHAR | Carattere | Typ danych dla pojedynczego znaku |
-| tp_BOOL | Booleano | Typ danych dla wartości logicznej |
-| tp_LONG | Grande | Typ danych dla dużej liczby całkowitej |
-| lit_BOOLEAN_TRUE | vero | Literał dla wartości true |
-| lit_BOOLEAN_FALSE | falso | Literał dla wartości false |
+| DO_KW | allora/fai | Słowo kluczowe użyte po warunku przed instrukcją warunkową |
+| ELSE_KW | altrimenti | Alternatywna instrukcja w konstrukcji if-else |
+| FOR_KW | per | Słowo kluczowe dla pętli typu FOR |
+| WHILE_KW | mentre | Słowo kluczowe dla pętli typu WHILE |
+| CONTINUE_KW | continua | Skok do początku pętli |
+| BRAKE_KW | ferma | Przerwanie pętli |
+| TRY_KW | prova | Słowo kluczowe dla bloku try |
+| CATCH_KW | cattura | Słowo kluczowe dla bloku catch |
+| THROW_KW | lancia | Słowo kluczowe do rzucania wyjątków |
+| RETURN_KW | ritorna | Zwracanie wartości |
+| NEW_KW | nuovo | Słowo kluczowe do tworzenia nowych obiektów |
+| SHORT_TP | Piccolo | Typ danych dla niewielkiej liczby całkowitej |
+| INT_TP | Intero | Typ danych dla liczby całkowitej |
+| FLOAT_TP | Flottante | Typ danych dla liczby zmiennoprzecinkowej |
+| DOUBLE_TP | Doppio | Typ danych dla podwójnej precyzji |
+| CHAR_TP | Carattere | Typ danych dla pojedynczego znaku |
+| BOOL_TP | Booleano | Typ danych dla wartości logicznej |
+| LONG_TP | Grande | Typ danych dla dużej liczby całkowitej |
+| BOOLEAN_LIT_TRUE | vero | Literał dla wartości true |
+| BOOLEAN_LIT_FALSE | falso | Literał dla wartości false |
 | IDENTFIER | [a-zA-Z_][a-zA-Z0-9_]* | Identyfikator zmiennej |
-| lit_INTEGER | [0-9]+ | Literał dla liczby całkowitej |
-| lit_FLOAT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
-| lit_CHAR | '[^']' | Literał dla znaku |
-| br_L_PAREN | \\( | Nawias'(' |
-| br_R_PAREN | \\) | Nawias ')' |
-| br_L_SQ | \\[ | Nawias '[' |
-| br_R_SQ | \\] | Nawias ']' |
-| separator_COMMA | , | Separator ',' |
-| separator_SEMICOLON | ; | Separator ';' |
-| kw_COMMENT_LINE | !! | Komentarz jednoliniowy |
+| INTEGER_LIT | [0-9]+ | Literał dla liczby całkowitej |
+| FLOAT_LIT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
+| TCHAR_LIT | '[^']' | Literał dla znaku |
+| L_PAREN_BR | \\( | Nawias'(' |
+| R_PAREN_BR | \\) | Nawias ')' |
+| L_SQ_BR | \\[ | Nawias '[' |
+| R_SQ_BR | \\] | Nawias ']' |
+| COMMA_SEP | , | Separator ',' |
+| SEMICOLON_SEP | ; | Separator ';' |
+| COMMENT_LINE | !! | Komentarz jednoliniowy |
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| math_op_add | \\+ | Operator dodawania |
-| math_op_sub | - | Operator odejmowania |
-| math_op_mul | \\* | Operator mnożenia |
-| math_op_div | / | Operator dzielenia |
-| math_op_mod | % | Operator modulo |
+| MATH_ADD_OP | \\+ | Operator dodawania |
+| MATH_SUB_OP | - | Operator odejmowania |
+| MATH_MUL_OP | \\* | Operator mnożenia |
+| MATH_DIV_OP | / | Operator dzielenia |
+| MATH_MOD_OP | % | Operator modulo |
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| bool_op_eq | '=' | Operator równne |
-| bool_ope_less_eq | '<=' | Operator mniejsze lub równe |
-| bool_op_greater_eq | '>=' | Operator większe lub równe |
-| bool_op_not_eq | '!=' | Operator różne |
-| bool_op_greater | '>' | Operator większe |
-| bool_op_less | '<' | Operator mniejsze |
+| BOOL_EQ_OP | '=' | Operator równne |
+| BOOL_LESS_EQ_OP | '<=' | Operator mniejsze lub równe |
+| BOOL_GREATER_EQ_OP | '>=' | Operator większe lub równe |
+| BOOL_NOT_EQ_OP | '!=' | Operator różne |
+| BOOL_GREATER_OP | '>' | Operator większe |
+| BOOL_LESS_OP | '<' | Operator mniejsze |
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| bit_op_or | '\|' | Operator bitowy lub |
-| bit_op_and | '&' | Operator bitowy i |
-| bit_op_right_shift | '>>' | Operator bitowy prawy shift |
-| bit_op_left_shift | '<<' | Operator bitowy lewy shift |
-| bit_op_xor | '^' | Operator bitowy xor |
+| BIT_OR_OP | '\|' | Operator bitowy lub |
+| BIT_AND_OP | '&' | Operator bitowy i |
+| BIT_RIGHT_SHIFT_OP | '>>' | Operator bitowy prawy shift |
+| BIT_LEFT_SHIFT_OP | '<<' | Operator bitowy lewy shift |
+| BIT_XOR_OP | '^' | Operator bitowy xor |
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| logical_op_and | 'e\\'' | Operator logiczny AND i OR (np. vero o' falso) |
-| logical_op_or | 'o\\'' | Operator logiczny AND i OR (np. vero o' falso) |
+| LOGICAL_AND_OP | 'e\\'' | Operator logiczny AND i OR (np. vero o' falso) |
+| LOGICAL_OR_OP | 'o\\'' | Operator logiczny AND i OR (np. vero o' falso) |
 
 ## Wstępne uwagi:
 - `inizio` - `fine` oddzielają ciąg poleceń wykonywany wramach danej pętli/funkcji/instrukcji warunkowej
