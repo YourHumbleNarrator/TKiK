@@ -242,15 +242,6 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#simple_lvalue.
-    def enterSimple_lvalue(self, ctx:ExprParser.Simple_lvalueContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#simple_lvalue.
-    def exitSimple_lvalue(self, ctx:ExprParser.Simple_lvalueContext):
-        pass
-
-
     # Enter a parse tree produced by ExprParser#expression.
     def enterExpression(self, ctx:ExprParser.ExpressionContext):
         pass

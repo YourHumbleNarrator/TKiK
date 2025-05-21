@@ -13,6 +13,23 @@ parser = ExprParser(token_stream)
 
 tree = parser.program()
 
+"""
+ściąga
+sprawdzanie czy element istnieje jeśli nie jest konieczny:
+ctx.jakisstejtment()
+
+tekst z keyworda (tego drukowanymi):
+ctx.IDENTIFIER().getText()
+
+jeśli taki keyword występuje pare razy
+ctx.IDENTIFIER(index).getText()
+
+tekst z innej funkcji:
+self.visit(ctx.jakisstejtment())
+
+tekst z zachowanymi enterami i tabami f i 3 cudzysłowy
+tekst ze zmiennymi w klamerkach f i cudzysłów
+"""
 
 class CodeGenerator(ExprVisitor):
     def visitProgram(self, ctx):
@@ -100,7 +117,10 @@ class CodeGenerator(ExprVisitor):
         return "//TODO11"
 
     def visitLocal_variable_declaration(self, ctx):
-        return "//TODO12"
+        if ctx.expression():
+            return f"/*type*/int {self.visit(ctx.lvalue())} = {self.visit(ctx.expression())} {ctx.SEMICOLON().getText()}"
+        else:
+            return f"/*type*/int {self.visit(ctx.lvalue())} {ctx.SEMICOLON().getText()}"
 
     def visitAssignment_statement(self, ctx):
         return "//TODO13"

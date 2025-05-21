@@ -3,6 +3,7 @@ inizio
 
     Intero array[100];
     Intero n;
+    Booleano temp := vero;
 
     Scriviere("Inserisci il numero di elementi: ");
     Caricare("$n",Intero);

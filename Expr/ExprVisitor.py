@@ -139,11 +139,6 @@ class ExprVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ExprParser#simple_lvalue.
-    def visitSimple_lvalue(self, ctx:ExprParser.Simple_lvalueContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by ExprParser#expression.
     def visitExpression(self, ctx:ExprParser.ExpressionContext):
         return self.visitChildren(ctx)
