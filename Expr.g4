@@ -39,9 +39,24 @@ type_specifier
     : ( BOOL_TP | SHORT_TP | INT_TP | FLOAT_TP | DOUBLE_TP | CHAR_TP | LONG_TP )
     ;
 
-// nie mozna zrobic pustej funkcji ktora cos zwraca
 function_body
     : statement*
+    ;
+
+write_function
+    : WRITE_KW
+    LEFT_PAREN
+    QUOT_MARK (PARAMETER expression)* QUOT_MARK
+    COMMA (type_specifier COMMA)*
+    RIGHT_PAREN SEMICOLON
+    ;
+
+read_function
+    : READ_KW
+    LEFT_PAREN
+    QUOT_MARK (PARAMETER expression)* QUOT_MARK
+    COMMA (type_specifier COMMA)*
+    RIGHT_PAREN SEMICOLON
     ;
 
 statement
@@ -239,6 +254,8 @@ RETURN_KW: 'ritorna';
 EXCEPTION_KW: 'eccezione';
 MAIN_KW: 'principale';
 NO_KW: 'no';
+WRITE_KW: 'write';
+READ_KW: 'read';
 IDENTIFIER: [a-zA-Z_] [a-zA-Z0-9_]* ;
 INTEGER_LITERAL: [0-9]+ ;
 FLOAT_LITERAL : [0-9]+.[0-9]+ ;
@@ -298,3 +315,7 @@ COMMA: ',';
 SEMICOLON: ';';
 DOT: '.';
 COLON: ':';
+
+// ???
+PARAMETER: '$';
+QUOT_MARK: '"';
