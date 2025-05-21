@@ -1,6 +1,5 @@
 grammar Expr;
 
-
 program
     : main_function_definition
      function_definition*
@@ -36,26 +35,29 @@ parameter
     ;
 
 type_specifier
-    : ( BOOL_TP | SHORT_TP | INT_TP | FLOAT_TP | DOUBLE_TP | CHAR_TP | LONG_TP )
+    : BOOL_TP
+    | SHORT_TP
+    | INT_TP
+    | FLOAT_TP
+    | DOUBLE_TP
+    | CHAR_TP
+    | LONG_TP
     ;
 
 function_body
-    : statement*
+    : statement+
     ;
 
+
 write_function
-    : WRITE_KW
-    LEFT_PAREN
-    QUOT_MARK (PARAMETER expression)* QUOT_MARK
-    COMMA (type_specifier COMMA)*
-    RIGHT_PAREN SEMICOLON
+    : WRITE_KW LEFT_PAREN TEXT_IN_QUOTES RIGHT_PAREN SEMICOLON
+    | WRITE_KW LEFT_PAREN QUOT_MARK (PARAMETER expression)* QUOT_MARK (COMMA type_specifier)* RIGHT_PAREN SEMICOLON
     ;
 
 read_function
     : READ_KW
     LEFT_PAREN
-    QUOT_MARK (PARAMETER lvalue)* QUOT_MARK
-    COMMA (type_specifier COMMA)*
+    QUOT_MARK PARAMETER lvalue QUOT_MARK COMMA type_specifier
     RIGHT_PAREN SEMICOLON
     ;
 
@@ -100,7 +102,7 @@ complex_statement_in_loop
     ;
 
 local_variable_declaration
-    : type_specifier ( LEFT_SQUARE math_expression RIGHT_SQUARE)* IDENTIFIER ( ASSIGN_OP expression )? SEMICOLON
+    : type_specifier lvalue ( ASSIGN_OP expression )? SEMICOLON
     ;
 
 assignment_statement
@@ -109,35 +111,35 @@ assignment_statement
 
 function_call
     : IDENTIFIER LEFT_PAREN RIGHT_PAREN SEMICOLON
-    | IDENTIFIER LEFT_PAREN lvalue (COMMA lvalue)* RIGHT_PAREN SEMICOLON
+    | IDENTIFIER LEFT_PAREN expression (COMMA expression)* RIGHT_PAREN SEMICOLON
     ;
 
 if_statement
     : IF_KW
     logical_expression
-    BEGIN_KW
-    statement
+    DO_KW BEGIN_KW
+    statement+
     END_KW SEMICOLON
-    (ELSE_KW BEGIN_KW statement END_KW SEMICOLON)?
+    (ELSE_KW BEGIN_KW statement+ END_KW SEMICOLON)?
     ;
 
 if_statement_in_loop
     : IF_KW
     logical_expression
-    BEGIN_KW
-    statement_in_loop
+    DO_KW BEGIN_KW
+    statement_in_loop+
     END_KW SEMICOLON
-    (ELSE_KW BEGIN_KW statement_in_loop END_KW SEMICOLON)?
+    (ELSE_KW BEGIN_KW statement_in_loop+ END_KW SEMICOLON)?
     ;
 
 for_statement
     : FOR_KW
-    math_expression
+    lvalue ASSIGN_OP math_expression
     TO_KW
     math_expression
     DO_KW
     BEGIN_KW
-    statement_in_loop
+    statement_in_loop+
     END_KW SEMICOLON
     ;
 
@@ -145,7 +147,7 @@ while_statement
     : WHILE_KW
     logical_expression
     BEGIN_KW
-    statement_in_loop
+    statement_in_loop+
     END_KW SEMICOLON
     ;
 
@@ -158,13 +160,13 @@ return_statement
 try_catch_statement
     : TRY_KW
     BEGIN_KW
-    statement
+    statement+
     END_KW
     CATCH_KW
     EXCEPTION_KW
     IDENTIFIER
     BEGIN_KW
-    statement
+    statement+
     END_KW
     SEMICOLON
     ;
@@ -178,6 +180,7 @@ throw_statement
 lvalue
     : IDENTIFIER (LEFT_SQUARE math_expression RIGHT_SQUARE)*
     ;
+
 
 expression
     : math_expression
@@ -256,16 +259,19 @@ RETURN_KW: 'ritorna';
 EXCEPTION_KW: 'eccezione';
 MAIN_KW: 'principale';
 NO_KW: 'no';
-WRITE_KW: 'scriviere';
-READ_KW: 'caricare';
-IDENTIFIER: [a-zA-Z_] [a-zA-Z0-9_]* ;
+WRITE_KW: 'Scriviere';
+READ_KW: 'Caricare';
+IDENTIFIER: [a-z_] [a-zA-Z0-9_]* ;
 INTEGER_LITERAL: [0-9]+ ;
 FLOAT_LITERAL : [0-9]+.[0-9]+ ;
 CHAR_LITERAL: '\'' ( '\\' [nt\\'"] | ~['\\] ) '\'' ;
 LINE_COMMENT: '!!' ~[\r\n]* -> skip ;
 BLOCK_COMMENT : '!!-' .*? '-!!' -> skip ;
-PARAMETER: '$';
+TEXT_IN_QUOTES: QUOT_MARK ( '\\' [nt\\'";] | ~["\\$;,] )* QUOT_MARK;
 QUOT_MARK: '"';
+SPACE: ' '  -> skip;
+ENter: '\n' -> skip;
+PARAMETER: '$';
 
 // Types
 SHORT_TP: 'Piccolo';
