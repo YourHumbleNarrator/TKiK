@@ -32,7 +32,7 @@ parameter_list
     ;
 
 parameter
-    : type_specifier (LEFT_SQUARE RIGHT_SQUARE )* IDENTIFIER
+    : type_specifier ( LEFT_SQUARE RIGHT_SQUARE )* IDENTIFIER
     ;
 
 type_specifier
@@ -54,7 +54,7 @@ write_function
 read_function
     : READ_KW
     LEFT_PAREN
-    QUOT_MARK (PARAMETER expression)* QUOT_MARK
+    QUOT_MARK (PARAMETER lvalue)* QUOT_MARK
     COMMA (type_specifier COMMA)*
     RIGHT_PAREN SEMICOLON
     ;
@@ -70,6 +70,8 @@ simple_statement
     | throw_statement
     | function_call
     | return_statement
+    | write_function
+    | read_function
     ;
 
 complex_statement
@@ -254,14 +256,16 @@ RETURN_KW: 'ritorna';
 EXCEPTION_KW: 'eccezione';
 MAIN_KW: 'principale';
 NO_KW: 'no';
-WRITE_KW: 'write';
-READ_KW: 'read';
+WRITE_KW: 'scriviere';
+READ_KW: 'caricare';
 IDENTIFIER: [a-zA-Z_] [a-zA-Z0-9_]* ;
 INTEGER_LITERAL: [0-9]+ ;
 FLOAT_LITERAL : [0-9]+.[0-9]+ ;
 CHAR_LITERAL: '\'' ( '\\' [nt\\'"] | ~['\\] ) '\'' ;
 LINE_COMMENT: '!!' ~[\r\n]* -> skip ;
 BLOCK_COMMENT : '!!-' .*? '-!!' -> skip ;
+PARAMETER: '$';
+QUOT_MARK: '"';
 
 // Types
 SHORT_TP: 'Piccolo';
@@ -313,9 +317,3 @@ RIGHT_SQUARE: ']';
 // Separators
 COMMA: ',';
 SEMICOLON: ';';
-DOT: '.';
-COLON: ':';
-
-// ???
-PARAMETER: '$';
-QUOT_MARK: '"';
