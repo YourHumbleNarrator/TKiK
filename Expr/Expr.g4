@@ -264,7 +264,7 @@ WRITE_KW: 'Scriviere';
 READ_KW: 'Caricare';
 IDENTIFIER: [a-z_] [a-zA-Z0-9_]* ;
 INTEGER_LITERAL: [0-9]+ ;
-FLOAT_LITERAL : [0-9]+.[0-9]+ ;
+FLOAT_LITERAL : [0-9]+'.'[0-9]+ ;
 CHAR_LITERAL: '\'' ( '\\' [nt\\'"] | ~['\\] ) '\'' ;
 LINE_COMMENT: '!!' ~[\r\n]* -> skip ;
 BLOCK_COMMENT : '!!-' .*? '-!!' -> skip ;
