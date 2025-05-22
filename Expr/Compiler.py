@@ -66,19 +66,19 @@ class CodeGenerator(ExprVisitor):
 
     def visitType_specifier(self, ctx):
         if ctx.BOOL_TP():
-            return ctx.BOOL_TP().getText()
+            return "bool"
         elif ctx.SHORT_TP():
-            return ctx.SHORT_TP().getText()
+            return "short int"
         elif ctx.INT_TP():
-            return ctx.INT_TP().getText()
+            return "int"
         elif ctx.FLOAT_TP():
-            return ctx.FLOAT_TP().getText()
+            return "float"
         elif ctx.DOUBLE_TP():
-            return ctx.DOUBLE_TP().getText()
+            return "double"
         elif ctx.CHAR_TP():
-            return ctx.CHAR_TP().getText()
+            return "char"
         elif ctx.LONG_TP():
-            return ctx.LONG_TP().getText()
+            return "long int"
         else:
             raise Exception("Unknown statement type")
 
@@ -101,6 +101,8 @@ class CodeGenerator(ExprVisitor):
         return "//TODO4"
 
     def visitRead_function(self, ctx):
+        # dont judge
+        # return f"scanf(\"%{self.visit(ctx.type_specifier())}\", &{self.visit(ctx.lvalue())});"
         return "//TODO5"
 
     def visitSimple_statement(self, ctx):
@@ -179,6 +181,11 @@ class CodeGenerator(ExprVisitor):
             return f"{ctx.IDENTIFIER().getText()}();"
 
     def visitIf_statement(self, ctx):
+        # statements = [self.visit(f) for f in ctx.statement()]
+        # if ctx.ELSE_KW():
+        #     return f"if ({self.visit(ctx.logical_expression())}) {statements}"
+        # else:
+        #     return f"if ({self.visit(ctx.logical_expression())}) {statements}"
         return "//TODO15"
 
     def visitFor_statement(self, ctx):
@@ -188,7 +195,12 @@ class CodeGenerator(ExprVisitor):
         return "//TODO16"
 
     def visitWhile_statement(self, ctx):
-        return "//TODO17"
+        statements = [self.visit(f) for f in ctx.statement()]
+        return f"""
+            while({self.visit(ctx.logical_expression())}) {{
+            {statements}
+            return 0;
+            }}""".strip()
 
     def visitReturn_statement(self, ctx):
         return f"return {self.visit(ctx.expression())};"
@@ -218,7 +230,10 @@ class CodeGenerator(ExprVisitor):
             return self.visit(ctx.lvalue())
 
     def visitComparison_expression(self, ctx):
-        return "//TODO25"
+        if ctx.LEFT_PAREN():
+            return f"({self.visit(ctx.math_expression())} {self.visit(ctx.boolean_operator())} {self.visit(ctx.math_expression())})"
+        else:
+            return f"{self.visit(ctx.math_expression())} {self.visit(ctx.boolean_operator())} {self.visit(ctx.math_expression())}"
 
     def visitBoolean_value(self, ctx):
         if ctx.BOOLEAN_TRUE_LIT():
@@ -229,7 +244,14 @@ class CodeGenerator(ExprVisitor):
             return self.visit(ctx.comparison_expression())
 
     def visitLogical_expression(self, ctx):
-        return "//TODO27"
+        if ctx.LEFT_PAREN():
+            return f"({self.visit(ctx.logical_expression())})"
+        # elif ctx.AND_LOGICAL_OP():
+        #     return f"{self.visit(ctx.boolean_value())} && {self.visit(ctx.logical_expression())})"
+        # else:
+        #     return f"{self.visit(ctx.boolean_value())} || {self.visit(ctx.logical_expression())})"
+        else:
+            return "wip"
 
     def visitLiteral(self, ctx):
         if ctx.INTEGER_LITERAL():
