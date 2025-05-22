@@ -1,6 +1,14 @@
-void quicksort() { /* helper function */ }
+void quicksort(int[False] array, int inizio1, int fine1); {
+        if (wip) {
+            ['int pivot = array[fin];', 'int indice = inizio1-1;', '//TODO165', 'scambia(array[indice+1], array[fin]);', 'int partizione = indice+1;', 'quicksort(array, inizio1, partizione-1);', 'quicksort(array, partizione+1, fine1);']
+            }
+        }
 
-void scambia() { /* helper function */ }
+void scambia(int a, int b); {
+        int temp = a;
+a = b;
+b = temp;
+        }
 
 int main() {
     int array[100];

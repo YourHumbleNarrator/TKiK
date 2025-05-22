@@ -48,21 +48,27 @@ class CodeGenerator(ExprVisitor):
 
     def visitFunction_definition(self, ctx):
         name = ctx.IDENTIFIER().getText()
-        return f"void {name}() {{ /* helper function */ }}"
+        if ctx.NO_KW():
+            return f"""
+        void {name}({self.visit(ctx.parameter_list())}); {{
+        {self.visit(ctx.function_body())}
+        }}""".strip()
+        else:
+            return "//TODO"
 
     def visitParameter_list(self, ctx):
         if ctx.COMMA():
             additional_params = [f", {self.visit(f)}" for f in ctx.parameter()[1:]]
-            return f"{self.visit(ctx.parameter()[0])} {additional_params}"
+            return f"{self.visit(ctx.parameter()[0])}{"".join(additional_params)}"
         else:
             return self.visit(ctx.parameter())
 
     def visitParameter(self, ctx):
         if ctx.LEFT_SQUARE():
-            squares = ["[]" in range(len(ctx.LEFT_SQUARE().getText()))]
-            return f"{self.visit(ctx.type_specifier)}{squares} {ctx.IDENTIFIER().getText()}"
+            squares = ["[]" in range(len(ctx.LEFT_SQUARE()))]
+            return f"{self.visit(ctx.type_specifier())}{squares} {ctx.IDENTIFIER().getText()}"
         else:
-            return f"{self.visit(ctx.type_specifier)} {ctx.IDENTIFIER().getText()}"
+            return f"{self.visit(ctx.type_specifier())} {ctx.IDENTIFIER().getText()}"
 
     def visitType_specifier(self, ctx):
         if ctx.BOOL_TP():
@@ -168,9 +174,9 @@ class CodeGenerator(ExprVisitor):
 
     def visitAssignment_statement(self, ctx):
         if ctx.expression():
-            return f"{self.visit(ctx.lvalue)} = {self.visit(ctx.expression())};"
+            return f"{self.visit(ctx.lvalue()[0])} = {self.visit(ctx.expression())};"
         else:
-            return f"{self.visit(ctx.lvalue)} = {self.visit(ctx.lvalue())};"
+            return f"{self.visit(ctx.lvalue())} = {self.visit(ctx.lvalue())};"
 
     def visitFunction_call(self, ctx):
         expressions = ctx.expression()
