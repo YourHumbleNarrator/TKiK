@@ -100,16 +100,43 @@ class CodeGenerator(ExprVisitor):
             raise Exception("Unknown statement type")
 
     def visitWrite_function(self, ctx):
-        # if ctx.TEXT_IN_QUOTES():
-        #     return self.visit(ctx.TEXT_IN_QUOTES().getText())
-        # else:
-        #     return "//TODO4"
-        return "//TODO4"
+        expressions = [f", {self.visit(f)}" for f in ctx.expression()]
+        specifiers = []
+        for i in range(len(ctx.type_specifier())):
+            if ctx.type_specifier() == "Piccolo":
+                specifier = "hi"
+            elif ctx.type_specifier() == "Intero" or ctx.type_specifier() == "Booleano":
+                specifier = "d"
+            elif ctx.type_specifier() == "Flottante":
+                specifier = "f"
+            elif ctx.type_specifier() == "Doppio":
+                specifier = "lf"
+            elif ctx.type_specifier() == "Grande":
+                specifier = "li"
+            else:
+                specifier = "c"
+            specifiers.append(f"%{specifier},")
+        if ctx.TEXT_IN_QUOTES():
+            return f"printf (\"{self.visit(ctx.TEXT_IN_QUOTES())}\");"
+        else:
+            return f"printf (\"{specifiers}\"{expressions});"
 
     def visitRead_function(self, ctx):
+        if ctx.type_specifier() == "Piccolo":
+            specifier = "hi"
+        elif ctx.type_specifier() == "Intero" or ctx.type_specifier() == "Booleano":
+            specifier = "d"
+        elif ctx.type_specifier() == "Flottante":
+            specifier = "f"
+        elif ctx.type_specifier() == "Doppio":
+            specifier = "lf"
+        elif ctx.type_specifier() == "Grande":
+            specifier = "li"
+        else:
+            specifier = "c"
         # dont judge
-        # return f"scanf(\"%{self.visit(ctx.type_specifier())}\", &{self.visit(ctx.lvalue())});"
-        return "//TODO5"
+        return f"scanf(\"%{specifier}\", &{self.visit(ctx.lvalue())});"
+        #return "//TODO5"
 
     def visitSimple_statement(self, ctx):
         if ctx.local_variable_declaration():

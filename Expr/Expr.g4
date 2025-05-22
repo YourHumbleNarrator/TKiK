@@ -239,9 +239,9 @@ SHORT_TP: 'Piccolo';
 INT_TP: 'Intero';
 FLOAT_TP: 'Flottante';
 DOUBLE_TP: 'Doppio';
+LONG_TP: 'Grande';
 CHAR_TP: 'Carattere';
 BOOL_TP: 'Booleano';
-LONG_TP: 'Grande';
 BOOLEAN_TRUE_LIT: 'Vero';
 BOOLEAN_FALSE_LIT: 'Falso';
 
