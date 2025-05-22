@@ -3,9 +3,10 @@ void quicksort() { /* helper function */ }
 void scambia() { /* helper function */ }
 
 int main() {
-    Intero array[100];
-Intero n;
-Booleano temp = Vero;
+    int array[100];
+int n;
+bool temp = 1;
+bool temp2 = wip;
 //TODO4
 //TODO5
 //TODO4

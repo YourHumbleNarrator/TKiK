@@ -60,9 +60,9 @@ class CodeGenerator(ExprVisitor):
     def visitParameter(self, ctx):
         if ctx.LEFT_SQUARE():
             squares = ["[]" in range(len(ctx.LEFT_SQUARE().getText()))]
-            return f"{ctx.visit(ctx.type_specifier)}{squares} {ctx.IDENTIFIER().getText()}"
+            return f"{self.visit(ctx.type_specifier)}{squares} {ctx.IDENTIFIER().getText()}"
         else:
-            return f"{ctx.visit(ctx.type_specifier)} {ctx.IDENTIFIER().getText()}"
+            return f"{self.visit(ctx.type_specifier)} {ctx.IDENTIFIER().getText()}"
 
     def visitType_specifier(self, ctx):
         if ctx.BOOL_TP():
@@ -221,7 +221,8 @@ class CodeGenerator(ExprVisitor):
             return ctx.CHAR_LITERAL().getText()
 
     def visitMath_expression(self, ctx):
-        return ctx.getText()
+        return ctx.getText().replace("Vero", "1").replace("Falso", "0")
+
 
     def visitTerm(self, ctx):
         if ctx.literal():
