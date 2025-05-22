@@ -47,7 +47,7 @@ class CodeGenerator(ExprVisitor):
     }}""".strip()
 
     def visitFunction_definition(self, ctx):
-        name = ctx.IDENTIFIER(0).getText()
+        name = ctx.IDENTIFIER().getText()
         return f"void {name}() {{ /* helper function */ }}"
 
     def visitParameter_list(self, ctx):
@@ -60,9 +60,9 @@ class CodeGenerator(ExprVisitor):
     def visitParameter(self, ctx):
         if ctx.LEFT_SQUARE():
             squares = ["[]" in range(len(ctx.LEFT_SQUARE().getText()))]
-            return f"{ctx.visir(ctx.type_specifier)}{squares} {ctx.IDENTIFIER().getText()}"
+            return f"{ctx.visit(ctx.type_specifier)}{squares} {ctx.IDENTIFIER().getText()}"
         else:
-            return f"{ctx.visir(ctx.type_specifier)} {ctx.IDENTIFIER().getText()}"
+            return f"{ctx.visit(ctx.type_specifier)} {ctx.IDENTIFIER().getText()}"
 
     def visitType_specifier(self, ctx):
         if ctx.BOOL_TP():
@@ -94,10 +94,11 @@ class CodeGenerator(ExprVisitor):
             raise Exception("Unknown statement type")
 
     def visitWrite_function(self, ctx):
-        if ctx.TEXT_IN_QUOTES():
-            return self.visit(ctx.TEXT_IN_QUOTES().getText())
-        else:
-            return "//TODO4"
+        # if ctx.TEXT_IN_QUOTES():
+        #     return self.visit(ctx.TEXT_IN_QUOTES().getText())
+        # else:
+        #     return "//TODO4"
+        return "//TODO4"
 
     def visitRead_function(self, ctx):
         return "//TODO5"
@@ -107,8 +108,6 @@ class CodeGenerator(ExprVisitor):
             return self.visit(ctx.local_variable_declaration())
         elif ctx.assignment_statement():
             return self.visit(ctx.assignment_statement())
-        elif ctx.throw_statement():
-            return self.visit(ctx.throw_statement())
         elif ctx.function_call():
             return self.visit(ctx.function_call())
         elif ctx.return_statement():
@@ -127,8 +126,6 @@ class CodeGenerator(ExprVisitor):
             return self.visit(ctx.for_statement())
         elif ctx.while_statement():
             return self.visit(ctx.while_statement())
-        elif ctx.try_catch_statement():
-            return self.visit(ctx.try_catch_statement())
         else:
             raise Exception("Unknown statement type")
 
@@ -163,9 +160,9 @@ class CodeGenerator(ExprVisitor):
 
     def visitLocal_variable_declaration(self, ctx):
         if ctx.expression():
-            return f"{self.visit(ctx.type_specifier)} {self.visit(ctx.lvalue())} = {self.visit(ctx.expression())};"
+            return f"{self.visit(ctx.type_specifier())} {self.visit(ctx.lvalue())} = {self.visit(ctx.expression())};"
         else:
-            return f"{self.visit(ctx.type_specifier)} {self.visit(ctx.lvalue())};"
+            return f"{self.visit(ctx.type_specifier())} {self.visit(ctx.lvalue())};"
 
     def visitAssignment_statement(self, ctx):
         if ctx.expression():
@@ -174,16 +171,19 @@ class CodeGenerator(ExprVisitor):
             return f"{self.visit(ctx.lvalue)} = {self.visit(ctx.lvalue())};"
 
     def visitFunction_call(self, ctx):
-        if ctx.expression():
-            additional_expressions = [f", {self.visit(f)}" for f in ctx.expression()[1:]]
-            return f"{self.visit(ctx.IDENTIFIER.getText())}({self.visit(ctx.expression()[0])} {additional_expressions});"
+        expressions = ctx.expression()
+        if expressions:
+            args = ", ".join([self.visit(e) for e in expressions])
+            return f"{ctx.IDENTIFIER().getText()}({args});"
         else:
-            return f"{self.visit(ctx.IDENTIFIER.getText())}();"
+            return f"{ctx.IDENTIFIER().getText()}();"
 
     def visitIf_statement(self, ctx):
         return "//TODO15"
+
     def visitFor_statement(self, ctx):
         return "//TODO165"
+
     def visitIf_statement_in_loop(self, ctx):
         return "//TODO16"
 
@@ -191,31 +191,42 @@ class CodeGenerator(ExprVisitor):
         return "//TODO17"
 
     def visitReturn_statement(self, ctx):
-        return "//TODO18"
-
-    def visitTry_catch_statement(self, ctx):
-        return "//TODO19"
-
-    def visitThrow_statement(self, ctx):
-        return "//TODO20"
+        return f"return {self.visit(ctx.expression())};"
 
     def visitLvalue(self, ctx):
-        return "//TODO21"
+        base = ctx.IDENTIFIER().getText()
+        indices = [self.visit(expr) for expr in ctx.math_expression()]
+        for idx in indices:
+            base += f"[{idx}]"
+        return base
 
     def visitExpression(self, ctx):
-        return "//TODO22"
+        if ctx.math_expression():
+            return self.visit(ctx.math_expression())
+        elif ctx.logical_expression():
+            return self.visit(ctx.logical_expression())
+        elif ctx.CHAR_LITERAL():
+            return ctx.CHAR_LITERAL().getText()
 
     def visitMath_expression(self, ctx):
-        return "//TODO23"
+        return ctx.getText()
 
     def visitTerm(self, ctx):
-        return "//TODO24"
+        if ctx.literal():
+            return self.visit(ctx.literal())
+        elif ctx.lvalue():
+            return self.visit(ctx.lvalue())
 
     def visitComparison_expression(self, ctx):
         return "//TODO25"
 
     def visitBoolean_value(self, ctx):
-        return "//TODO26"
+        if ctx.BOOLEAN_TRUE_LIT():
+            return "true"
+        elif ctx.BOOLEAN_FALSE_LIT():
+            return "false"
+        elif ctx.comparison_expression():
+            return self.visit(ctx.comparison_expression())
 
     def visitLogical_expression(self, ctx):
         return "//TODO27"

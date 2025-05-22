@@ -20,7 +20,6 @@ function_definition
     IDENTIFIER
     LEFT_PAREN parameter_list? RIGHT_PAREN
     (RETURN_KW type_specifier | NO_KW RETURN_KW)
-    (THROW_KW IDENTIFIER)?
     BEGIN_KW
     function_body
     END_KW SEMICOLON
@@ -69,7 +68,6 @@ statement
 simple_statement
     : local_variable_declaration
     | assignment_statement
-    | throw_statement
     | function_call
     | return_statement
     | write_function
@@ -80,7 +78,6 @@ complex_statement
     : if_statement
     | for_statement
     | while_statement
-    | try_catch_statement
     ;
 
 statement_in_loop
@@ -98,7 +95,6 @@ complex_statement_in_loop
     : if_statement_in_loop
     | for_statement
     | while_statement
-    | try_catch_statement
     ;
 
 local_variable_declaration
@@ -157,25 +153,6 @@ return_statement
     SEMICOLON
     ;
 
-try_catch_statement
-    : TRY_KW
-    BEGIN_KW
-    statement+
-    END_KW
-    CATCH_KW
-    EXCEPTION_KW
-    IDENTIFIER
-    BEGIN_KW
-    statement+
-    END_KW
-    SEMICOLON
-    ;
-
-throw_statement
-    : THROW_KW
-    IDENTIFIER
-    SEMICOLON
-    ;
 
 lvalue
     : IDENTIFIER (LEFT_SQUARE math_expression RIGHT_SQUARE)*
@@ -241,6 +218,17 @@ literal
     | BOOLEAN_FALSE_LIT
     ;
 
+// Types
+SHORT_TP: 'Piccolo';
+INT_TP: 'Intero';
+FLOAT_TP: 'Flottante';
+DOUBLE_TP: 'Doppio';
+CHAR_TP: 'Carattere';
+BOOL_TP: 'Booleano';
+LONG_TP: 'Grande';
+BOOLEAN_TRUE_LIT: 'Vero';
+BOOLEAN_FALSE_LIT: 'Falso';
+
 FUNCTION_KW : 'Funzione';
 BEGIN_KW : 'inizio';
 END_KW : 'fine';
@@ -252,9 +240,6 @@ TO_KW: 'a\'';
 WHILE_KW: 'mentre';
 CONTINUE_KW: 'continua';
 BREAK_KW: 'ferma';
-TRY_KW: 'prova';
-CATCH_KW: 'cattura';
-THROW_KW: 'lancia';
 RETURN_KW: 'ritorna';
 EXCEPTION_KW: 'eccezione';
 MAIN_KW: 'principale';
@@ -269,20 +254,10 @@ LINE_COMMENT: '!!' ~[\r\n]* -> skip ;
 BLOCK_COMMENT : '!!-' .*? '-!!' -> skip ;
 TEXT_IN_QUOTES: QUOT_MARK ( '\\' [nt\\'";] | ~["\\$;,] )* QUOT_MARK;
 QUOT_MARK: '"';
-SPACE: ' '  -> skip;
-ENter: '\n' -> skip;
+WS: [ \t\r\n]+ -> skip;
 PARAMETER: '$';
 
-// Types
-SHORT_TP: 'Piccolo';
-INT_TP: 'Intero';
-FLOAT_TP: 'Flottante';
-DOUBLE_TP: 'Doppio';
-CHAR_TP: 'Carattere';
-BOOL_TP: 'Booleano';
-LONG_TP: 'Grande';
-BOOLEAN_TRUE_LIT: 'vero';
-BOOLEAN_FALSE_LIT: 'falso';
+
 
 // Math operators
 ADD_MATH_OP: '+';

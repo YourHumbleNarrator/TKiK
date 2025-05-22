@@ -124,16 +124,6 @@ class ExprVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ExprParser#try_catch_statement.
-    def visitTry_catch_statement(self, ctx:ExprParser.Try_catch_statementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ExprParser#throw_statement.
-    def visitThrow_statement(self, ctx:ExprParser.Throw_statementContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by ExprParser#lvalue.
     def visitLvalue(self, ctx:ExprParser.LvalueContext):
         return self.visitChildren(ctx)

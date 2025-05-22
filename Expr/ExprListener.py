@@ -215,24 +215,6 @@ class ExprListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ExprParser#try_catch_statement.
-    def enterTry_catch_statement(self, ctx:ExprParser.Try_catch_statementContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#try_catch_statement.
-    def exitTry_catch_statement(self, ctx:ExprParser.Try_catch_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by ExprParser#throw_statement.
-    def enterThrow_statement(self, ctx:ExprParser.Throw_statementContext):
-        pass
-
-    # Exit a parse tree produced by ExprParser#throw_statement.
-    def exitThrow_statement(self, ctx:ExprParser.Throw_statementContext):
-        pass
-
-
     # Enter a parse tree produced by ExprParser#lvalue.
     def enterLvalue(self, ctx:ExprParser.LvalueContext):
         pass
