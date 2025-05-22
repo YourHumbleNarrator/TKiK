@@ -54,10 +54,29 @@ class CodeGenerator(ExprVisitor):
         return "//TODO1"
 
     def visitParameter(self, ctx):
-        return "//TODO2"
+        if ctx.LEFT_SQUARE():
+            squares = ["[]" in range(len(ctx.LEFT_SQUARE().getText()))]
+            return f"/*type*/int{squares} {ctx.IDENTIFIER().getText()}"
+        else:
+            return f"/*type*/int {ctx.IDENTIFIER().getText()}"
 
     def visitType_specifier(self, ctx):
-        return "//TODO3"
+        if ctx.BOOL_TP():
+            return ctx.BOOL_TP().getText()
+        elif ctx.SHORT_TP():
+            return ctx.SHORT_TP().getText()
+        elif ctx.INT_TP():
+            return ctx.INT_TP().getText()
+        elif ctx.FLOAT_TP():
+            return ctx.FLOAT_TP().getText()
+        elif ctx.DOUBLE_TP():
+            return ctx.DOUBLE_TP().getText()
+        elif ctx.CHAR_TP():
+            return ctx.CHAR_TP().getText()
+        elif ctx.LONG_TP():
+            return ctx.LONG_TP().getText()
+        else:
+            raise Exception("Unknown statement type")
 
     def visitFunction_body(self, ctx):
         return "\n".join([self.visit(s) for s in ctx.statement()])
@@ -108,13 +127,25 @@ class CodeGenerator(ExprVisitor):
 
 
     def visitStatement_in_loop(self, ctx):
-        return "//TODO9"
+        if ctx.simple_statement_in_loop():
+            return self.visit(ctx.simple_statement_in_loop())
+        elif ctx.complex_statement_in_loop():
+            return self.visit(ctx.complex_statement_in_loop())
+        else:
+            raise Exception("Unknown statement type")
 
     def visitSimple_statement_in_loop(self, ctx):
         return "//TODO10"
 
     def visitComplex_statement_in_loop(self, ctx):
-        return "//TODO11"
+        if ctx.if_statement_in_loop():
+            return self.visit(ctx.if_statement_in_loop())
+        elif ctx.for_statement():
+            return self.visit(ctx.for_statement())
+        elif ctx.while_statement():
+            return self.visit(ctx.while_statement())
+        else:
+            raise Exception("Unknown statement type")
 
     def visitLocal_variable_declaration(self, ctx):
         if ctx.expression():
