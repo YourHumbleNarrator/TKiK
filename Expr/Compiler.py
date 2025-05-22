@@ -51,14 +51,18 @@ class CodeGenerator(ExprVisitor):
         return f"void {name}() {{ /* helper function */ }}"
 
     def visitParameter_list(self, ctx):
-        return "//TODO1"
+        if ctx.COMMA():
+            additional_params = [f", {self.visit(f)}" for f in ctx.parameter()[1:]]
+            return f"{self.visit(ctx.parameter()[0])} {additional_params}"
+        else:
+            return self.visit(ctx.parameter())
 
     def visitParameter(self, ctx):
         if ctx.LEFT_SQUARE():
             squares = ["[]" in range(len(ctx.LEFT_SQUARE().getText()))]
-            return f"/*type*/int{squares} {ctx.IDENTIFIER().getText()}"
+            return f"{ctx.visir(ctx.type_specifier)}{squares} {ctx.IDENTIFIER().getText()}"
         else:
-            return f"/*type*/int {ctx.IDENTIFIER().getText()}"
+            return f"{ctx.visir(ctx.type_specifier)} {ctx.IDENTIFIER().getText()}"
 
     def visitType_specifier(self, ctx):
         if ctx.BOOL_TP():
@@ -90,7 +94,10 @@ class CodeGenerator(ExprVisitor):
             raise Exception("Unknown statement type")
 
     def visitWrite_function(self, ctx):
-        return "//TODO4"
+        if ctx.TEXT_IN_QUOTES():
+            return self.visit(ctx.TEXT_IN_QUOTES().getText())
+        else:
+            return "//TODO4"
 
     def visitRead_function(self, ctx):
         return "//TODO5"
@@ -135,7 +142,14 @@ class CodeGenerator(ExprVisitor):
             raise Exception("Unknown statement type")
 
     def visitSimple_statement_in_loop(self, ctx):
-        return "//TODO10"
+        if ctx.simple_statement():
+            return self.visit(ctx.simple_statement())
+        elif ctx.BREAK_KW():
+            return "break;"
+        elif ctx.CONTINUE_KW():
+            return "continue;"
+        else:
+            raise Exception("Unknown statement type")
 
     def visitComplex_statement_in_loop(self, ctx):
         if ctx.if_statement_in_loop():
@@ -149,15 +163,22 @@ class CodeGenerator(ExprVisitor):
 
     def visitLocal_variable_declaration(self, ctx):
         if ctx.expression():
-            return f"/*type*/int {self.visit(ctx.lvalue())} = {self.visit(ctx.expression())} {ctx.SEMICOLON().getText()}"
+            return f"{self.visit(ctx.type_specifier)} {self.visit(ctx.lvalue())} = {self.visit(ctx.expression())};"
         else:
-            return f"/*type*/int {self.visit(ctx.lvalue())} {ctx.SEMICOLON().getText()}"
+            return f"{self.visit(ctx.type_specifier)} {self.visit(ctx.lvalue())};"
 
     def visitAssignment_statement(self, ctx):
-        return "//TODO13"
+        if ctx.expression():
+            return f"{self.visit(ctx.lvalue)} = {self.visit(ctx.expression())};"
+        else:
+            return f"{self.visit(ctx.lvalue)} = {self.visit(ctx.lvalue())};"
 
     def visitFunction_call(self, ctx):
-        return "//TODO14"
+        if ctx.expression():
+            additional_expressions = [f", {self.visit(f)}" for f in ctx.expression()[1:]]
+            return f"{self.visit(ctx.IDENTIFIER.getText())}({self.visit(ctx.expression()[0])} {additional_expressions});"
+        else:
+            return f"{self.visit(ctx.IDENTIFIER.getText())}();"
 
     def visitIf_statement(self, ctx):
         return "//TODO15"
