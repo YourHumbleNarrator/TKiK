@@ -35,9 +35,10 @@ TODO: globalna zmienna zliczająca liczbe tabulacji w każdym complex_statement
 
 class CodeGenerator(ExprVisitor):
     def visitProgram(self, ctx):
+        header = ["#define bool int\n#include <stdio.h>"]
         main_code = self.visit(ctx.main_function_definition())
         additional_funcs = [self.visit(f) for f in ctx.function_definition()]
-        return "\n\n".join(additional_funcs + [main_code])
+        return "\n\n".join(header + additional_funcs + [main_code])
 
     def visitMain_function_definition(self, ctx):
         params = self.visit(ctx.parameter_list()) if ctx.parameter_list() else ""
@@ -106,39 +107,38 @@ void {name}({self.visit(ctx.parameter_list())}); {{
     def visitWrite_function(self, ctx):
         expressions = [f", {self.visit(f)}" for f in ctx.expression()]
         specifiers = []
-        for i in range(len(ctx.type_specifier())):
-            if ctx.type_specifier() == "Piccolo":
+        for element in ctx.type_specifier():
+            if self.visit(element) == "short int":
                 specifier = "hi"
-            elif ctx.type_specifier() == "Intero" or ctx.type_specifier() == "Booleano":
+            elif self.visit(element) in ["int", "bool"]:
                 specifier = "d"
-            elif ctx.type_specifier() == "Flottante":
+            elif self.visit(element) == "float":
                 specifier = "f"
-            elif ctx.type_specifier() == "Doppio":
+            elif self.visit(element) == "double":
                 specifier = "lf"
-            elif ctx.type_specifier() == "Grande":
+            elif self.visit(element) == "long int":
                 specifier = "li"
             else:
                 specifier = "c"
-            specifiers.append(f"%{specifier},")
+            specifiers.append(f"%{specifier}")
         if ctx.TEXT_IN_QUOTES():
-            return f"printf (\"{self.visit(ctx.TEXT_IN_QUOTES())}\");"
+            return f"printf ({ctx.TEXT_IN_QUOTES().getText()});"
         else:
-            return f"printf (\"{specifiers}\"{expressions});"
+            return f"printf (\"{"".join(specifiers)}\"{"".join(expressions)});"
 
     def visitRead_function(self, ctx):
-        if ctx.type_specifier() == "Piccolo":
+        if ctx.type_specifier() == "short":
             specifier = "hi"
-        elif ctx.type_specifier() == "Intero" or ctx.type_specifier() == "Booleano":
+        elif self.visit(ctx.type_specifier()) in ["int", "bool"]:
             specifier = "d"
-        elif ctx.type_specifier() == "Flottante":
+        elif self.visit(ctx.type_specifier()) == "float":
             specifier = "f"
-        elif ctx.type_specifier() == "Doppio":
+        elif self.visit(ctx.type_specifier()) == "double":
             specifier = "lf"
-        elif ctx.type_specifier() == "Grande":
+        elif self.visit(ctx.type_specifier()) == "long int":
             specifier = "li"
         else:
             specifier = "c"
-        # dont judge
         return f"scanf(\"%{specifier}\", &{self.visit(ctx.lvalue())});"
         #return "//TODO5"
 
