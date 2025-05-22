@@ -116,7 +116,15 @@ if_statement
     DO_KW BEGIN_KW
     statement+
     END_KW SEMICOLON
-    (ELSE_KW BEGIN_KW statement+ END_KW SEMICOLON)?
+    else_statement?
+    ;
+
+else_statement
+    : ELSE_KW
+    BEGIN_KW
+    statement+
+    END_KW
+    SEMICOLON
     ;
 
 if_statement_in_loop
@@ -125,7 +133,15 @@ if_statement_in_loop
     DO_KW BEGIN_KW
     statement_in_loop+
     END_KW SEMICOLON
-    (ELSE_KW BEGIN_KW statement_in_loop+ END_KW SEMICOLON)?
+    else_statement_in_loop?
+    ;
+
+else_statement_in_loop
+    : ELSE_KW
+    BEGIN_KW
+    statement_in_loop+
+    END_KW
+    SEMICOLON
     ;
 
 for_statement
