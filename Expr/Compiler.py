@@ -181,26 +181,56 @@ class CodeGenerator(ExprVisitor):
             return f"{ctx.IDENTIFIER().getText()}();"
 
     def visitIf_statement(self, ctx):
-        # statements = [self.visit(f) for f in ctx.statement()]
-        # if ctx.ELSE_KW():
-        #     return f"if ({self.visit(ctx.logical_expression())}) {statements}"
-        # else:
-        #     return f"if ({self.visit(ctx.logical_expression())}) {statements}"
-        return "//TODO15"
+        statements = [self.visit(f) for f in ctx.statement()]
+        if ctx.else_statement():
+            return f"""
+            if ({self.visit(ctx.logical_expression())}) {{
+            {statements}
+            {self.visit(ctx.else_statement())}
+            }}""".strip()
+        else:
+            return f"""
+            if ({self.visit(ctx.logical_expression())}) {{
+            {statements}
+            }}""".strip()
+
+    def visitElse_statement(self, ctx):
+        statements = [self.visit(f) for f in ctx.statement()]
+        return f"""
+        else {{
+        {statements}
+        }}""".strip()
 
     def visitFor_statement(self, ctx):
         return "//TODO165"
 
     def visitIf_statement_in_loop(self, ctx):
-        return "//TODO16"
+        statements = [self.visit(f) for f in ctx.statement_in_loop()]
+        if ctx.else_statement_in_loop():
+            return f"""
+            if ({self.visit(ctx.logical_expression())}) {{
+            {statements}
+            {self.visit(ctx.else_statement_in_loop())}
+            }}""".strip()
+        else:
+            return f"""
+            if ({self.visit(ctx.logical_expression())}) {{
+            {statements}
+            }}""".strip()
+
+    def visitElse_statement_in_loop(self, ctx):
+        statements = [self.visit(f) for f in ctx.statement_in_loop()]
+        return f"""
+        else {{
+        {statements}
+        }}""".strip()
 
     def visitWhile_statement(self, ctx):
         statements = [self.visit(f) for f in ctx.statement()]
         return f"""
-            while({self.visit(ctx.logical_expression())}) {{
-            {statements}
-            return 0;
-            }}""".strip()
+        while ({self.visit(ctx.logical_expression())}) {{
+        {statements}
+        }}""".strip()
 
     def visitReturn_statement(self, ctx):
         return f"return {self.visit(ctx.expression())};"
