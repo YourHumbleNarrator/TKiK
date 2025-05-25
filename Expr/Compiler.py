@@ -32,6 +32,7 @@ tekst ze zmiennymi w klamerkach f i cudzysłów
 """
 
 class CodeGenerator(ExprVisitor):
+    tab_counter = 0
     def visitProgram(self, ctx):
         main_code = self.visit(ctx.main_function_definition())
         additional_funcs = [self.visit(f) for f in ctx.function_definition()]
@@ -155,6 +156,7 @@ class CodeGenerator(ExprVisitor):
             raise Exception("Unknown statement type")
 
     def visitComplex_statement(self, ctx):
+        self.tab_counter += 1
         if ctx.if_statement():
             return self.visit(ctx.if_statement())
         elif ctx.for_statement():
@@ -184,6 +186,7 @@ class CodeGenerator(ExprVisitor):
             raise Exception("Unknown statement type")
 
     def visitComplex_statement_in_loop(self, ctx):
+        self.tab_counter += 1
         if ctx.if_statement_in_loop():
             return self.visit(ctx.if_statement_in_loop())
         elif ctx.for_statement():
@@ -214,7 +217,9 @@ class CodeGenerator(ExprVisitor):
             return f"{ctx.IDENTIFIER().getText()}();"
 
     def visitIf_statement(self, ctx):
-        statements = [self.visit(f) for f in ctx.statement()]
+        tabs = self.tab_counter * '\t'
+        self.tab_counter -= 1
+        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
         if ctx.else_statement():
             return f"""
             if ({self.visit(ctx.logical_expression())}) {{
@@ -228,17 +233,23 @@ class CodeGenerator(ExprVisitor):
             }}""".strip()
 
     def visitElse_statement(self, ctx):
-        statements = [self.visit(f) for f in ctx.statement()]
+        tabs = self.tab_counter * '\t'
+        self.tab_counter -= 1
+        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
         return f"""
         else {{
         {statements}
         }}""".strip()
 
     def visitFor_statement(self, ctx):
+        tabs = self.tab_counter * '\t'
+        self.tab_counter -= 1
         return "//TODO165"
 
     def visitIf_statement_in_loop(self, ctx):
-        statements = [self.visit(f) for f in ctx.statement_in_loop()]
+        tabs = self.tab_counter * '\t'
+        self.tab_counter -= 1
+        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement_in_loop()]
         if ctx.else_statement_in_loop():
             return f"""
             if ({self.visit(ctx.logical_expression())}) {{
@@ -252,14 +263,18 @@ class CodeGenerator(ExprVisitor):
             }}""".strip()
 
     def visitElse_statement_in_loop(self, ctx):
-        statements = [self.visit(f) for f in ctx.statement_in_loop()]
+        tabs = self.tab_counter * '\t'
+        self.tab_counter -= 1
+        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement_in_loop()]
         return f"""
         else {{
         {statements}
         }}""".strip()
 
     def visitWhile_statement(self, ctx):
-        statements = [self.visit(f) for f in ctx.statement()]
+        tabs = self.tab_counter * '\t'
+        self.tab_counter -= 1
+        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
         return f"""
         while ({self.visit(ctx.logical_expression())}) {{
         {statements}
