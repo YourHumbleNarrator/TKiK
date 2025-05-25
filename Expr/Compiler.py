@@ -33,8 +33,11 @@ tekst ze zmiennymi w klamerkach f i cudzysłów
 TODO: globalna zmienna zliczająca liczbe tabulacji w każdym complex_statement
 """
 
+
 class CodeGenerator(ExprVisitor):
+
     tab_counter = 0
+
     def visitProgram(self, ctx):
         header = ["#define bool int\n#include <stdio.h>"]
         main_code = self.visit(ctx.main_function_definition())
@@ -141,7 +144,6 @@ void {name}({self.visit(ctx.parameter_list())}); {{
         else:
             specifier = "c"
         return f"scanf(\"%{specifier}\", &{self.visit(ctx.lvalue())});"
-        #return "//TODO5"
 
     def visitSimple_statement(self, ctx):
         if ctx.local_variable_declaration():
@@ -169,7 +171,6 @@ void {name}({self.visit(ctx.parameter_list())}); {{
             return self.visit(ctx.while_statement())
         else:
             raise Exception("Unknown statement type")
-
 
     def visitStatement_in_loop(self, ctx):
         if ctx.simple_statement_in_loop():
@@ -249,19 +250,15 @@ else {{
 }}""".strip()
 
     def visitFor_statement(self, ctx):
-<<<<<<< HEAD
         tabs = self.tab_counter * '\t'
         self.tab_counter -= 1
-        return "//TODO165"
-=======
         iterator = self.visit(ctx.lvalue())
         start = self.visit(ctx.math_expression(0))
         end = self.visit(ctx.math_expression(1))
-        body = [self.visit(stmt) for stmt in ctx.statement_in_loop()]
+        body = [f'{tabs}{self.visit(stmt)}' for stmt in ctx.statement_in_loop()]
         joined = "\n".join(body)
 
         return f"for (int {iterator} = {start}; {iterator} <= {end}; {iterator}++) {{\n{joined}\n}}"
->>>>>>> cbf8f0534e2ef389cf12654a4500d7893e67fb9e
 
     def visitIf_statement_in_loop(self, ctx):
         tabs = self.tab_counter * '\t'
@@ -321,7 +318,6 @@ while ({self.visit(ctx.logical_expression())}) {{
 
     def visitMath_expression(self, ctx):
         return ctx.getText().replace("Vero", "1").replace("Falso", "0")
-
 
     def visitTerm(self, ctx):
         if ctx.literal():
