@@ -29,31 +29,36 @@ self.visit(ctx.jakisstejtment())
 
 tekst z zachowanymi enterami i tabami f i 3 cudzysłowy
 tekst ze zmiennymi w klamerkach f i cudzysłów
+
+TODO: globalna zmienna zliczająca liczbe tabulacji w każdym complex_statement
 """
 
 class CodeGenerator(ExprVisitor):
     tab_counter = 0
     def visitProgram(self, ctx):
+        header = ["#define bool int\n#include <stdio.h>"]
         main_code = self.visit(ctx.main_function_definition())
         additional_funcs = [self.visit(f) for f in ctx.function_definition()]
-        return "\n\n".join(additional_funcs + [main_code])
+        return "\n\n".join(header + additional_funcs + [main_code])
 
     def visitMain_function_definition(self, ctx):
         params = self.visit(ctx.parameter_list()) if ctx.parameter_list() else ""
         body = self.visit(ctx.function_body())
         return f"""
-    int main({params}) {{
-    {body}
-    return 0;
-    }}""".strip()
+int main({params}) {{
+
+{body}
+return 0;
+}}""".strip()
 
     def visitFunction_definition(self, ctx):
         name = ctx.IDENTIFIER().getText()
         if ctx.NO_KW():
             return f"""
-        void {name}({self.visit(ctx.parameter_list())}); {{
-        {self.visit(ctx.function_body())}
-        }}""".strip()
+void {name}({self.visit(ctx.parameter_list())}); {{
+
+{self.visit(ctx.function_body())}
+}}""".strip()
         else:
             return "//TODO"
 
@@ -103,39 +108,38 @@ class CodeGenerator(ExprVisitor):
     def visitWrite_function(self, ctx):
         expressions = [f", {self.visit(f)}" for f in ctx.expression()]
         specifiers = []
-        for i in range(len(ctx.type_specifier())):
-            if ctx.type_specifier() == "Piccolo":
+        for element in ctx.type_specifier():
+            if self.visit(element) == "short int":
                 specifier = "hi"
-            elif ctx.type_specifier() == "Intero" or ctx.type_specifier() == "Booleano":
+            elif self.visit(element) in ["int", "bool"]:
                 specifier = "d"
-            elif ctx.type_specifier() == "Flottante":
+            elif self.visit(element) == "float":
                 specifier = "f"
-            elif ctx.type_specifier() == "Doppio":
+            elif self.visit(element) == "double":
                 specifier = "lf"
-            elif ctx.type_specifier() == "Grande":
+            elif self.visit(element) == "long int":
                 specifier = "li"
             else:
                 specifier = "c"
-            specifiers.append(f"%{specifier},")
+            specifiers.append(f"%{specifier}")
         if ctx.TEXT_IN_QUOTES():
-            return f"printf (\"{self.visit(ctx.TEXT_IN_QUOTES())}\");"
+            return f"printf ({ctx.TEXT_IN_QUOTES().getText()});"
         else:
-            return f"printf (\"{specifiers}\"{expressions});"
+            return f"printf (\"{"".join(specifiers)}\"{"".join(expressions)});"
 
     def visitRead_function(self, ctx):
-        if ctx.type_specifier() == "Piccolo":
+        if ctx.type_specifier() == "short":
             specifier = "hi"
-        elif ctx.type_specifier() == "Intero" or ctx.type_specifier() == "Booleano":
+        elif self.visit(ctx.type_specifier()) in ["int", "bool"]:
             specifier = "d"
-        elif ctx.type_specifier() == "Flottante":
+        elif self.visit(ctx.type_specifier()) == "float":
             specifier = "f"
-        elif ctx.type_specifier() == "Doppio":
+        elif self.visit(ctx.type_specifier()) == "double":
             specifier = "lf"
-        elif ctx.type_specifier() == "Grande":
+        elif self.visit(ctx.type_specifier()) == "long int":
             specifier = "li"
         else:
             specifier = "c"
-        # dont judge
         return f"scanf(\"%{specifier}\", &{self.visit(ctx.lvalue())});"
         #return "//TODO5"
 
@@ -222,29 +226,42 @@ class CodeGenerator(ExprVisitor):
         statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
         if ctx.else_statement():
             return f"""
-            if ({self.visit(ctx.logical_expression())}) {{
-            {statements}
-            {self.visit(ctx.else_statement())}
-            }}""".strip()
+if ({self.visit(ctx.logical_expression())}) {{
+
+{"/n".join(statements)}
+{self.visit(ctx.else_statement())}
+}}""".strip()
         else:
             return f"""
-            if ({self.visit(ctx.logical_expression())}) {{
-            {statements}
-            }}""".strip()
+if ({self.visit(ctx.logical_expression())}) {{
+
+{"\n".join(statements)}
+}}""".strip()
 
     def visitElse_statement(self, ctx):
         tabs = self.tab_counter * '\t'
         self.tab_counter -= 1
         statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
         return f"""
-        else {{
-        {statements}
-        }}""".strip()
+else {{
+
+{statements}
+}}""".strip()
 
     def visitFor_statement(self, ctx):
+<<<<<<< HEAD
         tabs = self.tab_counter * '\t'
         self.tab_counter -= 1
         return "//TODO165"
+=======
+        iterator = self.visit(ctx.lvalue())
+        start = self.visit(ctx.math_expression(0))
+        end = self.visit(ctx.math_expression(1))
+        body = [self.visit(stmt) for stmt in ctx.statement_in_loop()]
+        joined = "\n".join(body)
+
+        return f"for (int {iterator} = {start}; {iterator} <= {end}; {iterator}++) {{\n{joined}\n}}"
+>>>>>>> cbf8f0534e2ef389cf12654a4500d7893e67fb9e
 
     def visitIf_statement_in_loop(self, ctx):
         tabs = self.tab_counter * '\t'
@@ -252,33 +269,37 @@ class CodeGenerator(ExprVisitor):
         statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement_in_loop()]
         if ctx.else_statement_in_loop():
             return f"""
-            if ({self.visit(ctx.logical_expression())}) {{
-            {statements}
-            {self.visit(ctx.else_statement_in_loop())}
-            }}""".strip()
+if ({self.visit(ctx.logical_expression())}) {{
+
+{"\n".join(statements)}
+{self.visit(ctx.else_statement_in_loop())}
+}}""".strip()
         else:
             return f"""
-            if ({self.visit(ctx.logical_expression())}) {{
-            {statements}
-            }}""".strip()
+if ({self.visit(ctx.logical_expression())}) {{
+
+{"\n".join(statements)}
+}}""".strip()
 
     def visitElse_statement_in_loop(self, ctx):
         tabs = self.tab_counter * '\t'
         self.tab_counter -= 1
         statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement_in_loop()]
         return f"""
-        else {{
-        {statements}
-        }}""".strip()
+else {{
+
+{statements}
+}}""".strip()
 
     def visitWhile_statement(self, ctx):
         tabs = self.tab_counter * '\t'
         self.tab_counter -= 1
         statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
         return f"""
-        while ({self.visit(ctx.logical_expression())}) {{
-        {statements}
-        }}""".strip()
+while ({self.visit(ctx.logical_expression())}) {{
+
+{statements}
+}}""".strip()
 
     def visitReturn_statement(self, ctx):
         return f"return {self.visit(ctx.expression())};"
@@ -316,9 +337,9 @@ class CodeGenerator(ExprVisitor):
 
     def visitBoolean_value(self, ctx):
         if ctx.BOOLEAN_TRUE_LIT():
-            return "true"
+            return "1"
         elif ctx.BOOLEAN_FALSE_LIT():
-            return "false"
+            return "0"
         elif ctx.comparison_expression():
             return self.visit(ctx.comparison_expression())
 
@@ -338,9 +359,9 @@ class CodeGenerator(ExprVisitor):
         elif ctx.FLOAT_LITERAL():
             return ctx.FLOAT_LITERAL().getText()
         elif ctx.BOOLEAN_TRUE_LIT():
-            return "true"
+            return "1"
         elif ctx.BOOLEAN_FALSE_LIT():
-            return "false"
+            return "0"
         else:
             raise Exception("Unknown statement type")
 
