@@ -7,7 +7,7 @@
 Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem słów kluczowych w języku włoskim. Gava łączy elementy języków wywodzących się z C, oraz Ady, co sprawia, że jest on bardziej intuicyjny i łatwiejszy do nauki dla osób początkujących.
 
 ## 💻📄📒 Sprawy techniczne
-- Typ translatroa - kompilator (Gava => C)
+- Typ translatroa - kompilator (Gava 🡒 C)
 - Język implementacji - `Python`
 - Generator skanerów i parserów - `ANTLR4`
 
