@@ -1,13 +1,17 @@
-# Kompilator własnego języka do C
+# Kompilator własnego języka Gava 🤌 do C
 - Berenike Banek berenike@student.agh.edu.pl
 - Mateusz Bielówka mbielowka@student.agh.edu.pl
 
-## Opis
-- Język wykorzystuje elementy języka włoskiego, języków C-like i Ady, co sprawia, że będzie on bardziej zrozumiały dla osób znających te języki.
+(nowy opis tutaj)
+## 🏆 Cel projektu
+Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem słów kluczowych w języku włoskim. Gava łączy elementy języków wywodzących się z C, oraz Ady, co sprawia, że jest on bardziej intuicyjny i łatwiejszy do nauki dla osób początkujących.
+
+## 💻📄📒 Sprawy techniczne
+- Typ translatroa - kompilator (Gava => C)
 - Język implementacji - `Python`
 - Generator skanerów i parserów - `ANTLR4`
 
-## Wykaz tokenów
+## 🖇️🧾📜 Wykaz tokenów
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
@@ -18,19 +22,25 @@
 | DO_KW | allora/fai | Słowo kluczowe użyte po warunku przed instrukcją warunkową |
 | ELSE_KW | altrimenti | Alternatywna instrukcja w konstrukcji if-else |
 | FOR_KW | per | Słowo kluczowe dla pętli typu FOR |
+| TO_KW | a' | Słowo kluczowe dla warunku w pętli |
 | WHILE_KW | mentre | Słowo kluczowe dla pętli typu WHILE |
 | CONTINUE_KW | continua | Skok do początku pętli |
-| BRAKE_KW | ferma | Przerwanie pętli |
-| TRY_KW | prova | Słowo kluczowe dla bloku try |
-| CATCH_KW | cattura | Słowo kluczowe dla bloku catch |
-| THROW_KW | lancia | Słowo kluczowe do rzucania wyjątków |
+| BREAK_KW | ferma | Przerwanie pętli |
 | RETURN_KW | ritorna | Zwracanie wartości |
-| NEW_KW | nuovo | Słowo kluczowe do tworzenia nowych obiektów |
+| MAIN_KW | principale | Otwarcie funkcji Main |
+| NO_KW | no | Słowo kluczowe do funkcji void |
+| WRITE_KW | Scriviere | Wywołanie funkcji printf |
+| READ_KW | Caricare | Wywołanie funkcji scanf |
 | IDENTFIER | [a-zA-Z_][a-zA-Z0-9_]* | Identyfikator zmiennej |
 | INTEGER_LIT | [0-9]+ | Literał dla liczby całkowitej |
 | FLOAT_LIT | [0-9]+.[0-9]+ | Literał dla liczby zmiennoprzecinkowej |
 | TCHAR_LIT | '[^']' | Literał dla znaku |
-| COMMENT_LINE | !! | Komentarz jednoliniowy |
+| QUOT_MARK | " | Symbol cudzysłowia |
+| PARAMETER | $ | Symbol parametru |
+| TEXT_IN_QUOTES | " ( '\\' [nt\\'";] | ~["\\$;,] )* " | Tekst |
+| LINE_COMMENT | !! | Komentarz jednoliniowy |
+| BLOCK_COMMENT | '!!-' .*? '-!!' | Komentarz blokowy |
+| W_S | [ \t\r\n]+ | Pusta przestrzeń |
 
 ### Typy zmiennych
 | Kod Tokena | Wartość Tokena | Opis |
@@ -53,6 +63,15 @@
 | MUL_MATH_OP | \\* | Operator mnożenia |
 | DIV_MATH_OP | / | Operator dzielenia |
 | MOD_MATH_OP | % | Operator modulo |
+
+### Operator przypisania
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
+| ASSIGN_OP | := | Operator przypisania |
+
+### Operatory bitowe
+| Kod Tokena | Wartość Tokena | Opis |
+|---|---|---|
 | OR_BIT_OP | '\|' | Operator bitowy lub |
 | AND_BIT_OP | '&' | Operator bitowy i |
 | RIGHT_SHIFT_BIT_OP | '>>' | Operator bitowy prawy shift |
@@ -72,8 +91,9 @@
 ### Operatory logiczne
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
-| AND_LOGICAL_OP | 'e\\'' | Operator logiczny AND i OR (np. vero o' falso) |
-| OR_LOGICAL_OP | 'o\\'' | Operator logiczny AND i OR (np. vero o' falso) |
+| AND_LOGICAL_OP | 'e\\'' | Operator logiczny AND |
+| OR_LOGICAL_OP | 'o\\'' | Operator logiczny OR |
+| NOT_LOGICAL_OP | non | Operator logiczny NOT |
 
 ### Nawiasy
 | Kod Tokena | Wartość Tokena | Opis |
@@ -88,8 +108,12 @@
 |---|---|---|
 | COMMA | , | Separator ',' |
 | SEMICOLON | ; | Separator ';' |
-| DOT | . | Separator '.' |
-| COLON | : | Separator ':' |
+
+## 🅰️ Gramatyka
+work in progress
+
+## 🔎 Instrukcja obsługi
+work in progress
 
 ## Wstępne uwagi:
 - `inizio` - `fine` oddzielają ciąg poleceń wykonywany wramach danej pętli/funkcji/instrukcji warunkowej
