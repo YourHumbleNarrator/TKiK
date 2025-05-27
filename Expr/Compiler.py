@@ -35,9 +35,6 @@ TODO: globalna zmienna zliczająca liczbe tabulacji w każdym complex_statement
 
 
 class CodeGenerator(ExprVisitor):
-
-    tab_counter = 0
-
     def visitProgram(self, ctx):
         header = ["#define bool int\n#include <stdio.h>"]
         main_code = self.visit(ctx.main_function_definition())
@@ -58,7 +55,7 @@ return 0;
         name = ctx.IDENTIFIER().getText()
         if ctx.NO_KW():
             return f"""
-void {name}({self.visit(ctx.parameter_list())}); {{
+void {name}({self.visit(ctx.parameter_list())}) {{
 
 {self.visit(ctx.function_body())}
 }}""".strip()
@@ -162,7 +159,6 @@ void {name}({self.visit(ctx.parameter_list())}); {{
             raise Exception("Unknown statement type")
 
     def visitComplex_statement(self, ctx):
-        self.tab_counter += 1
         if ctx.if_statement():
             return self.visit(ctx.if_statement())
         elif ctx.for_statement():
@@ -191,7 +187,6 @@ void {name}({self.visit(ctx.parameter_list())}); {{
             raise Exception("Unknown statement type")
 
     def visitComplex_statement_in_loop(self, ctx):
-        self.tab_counter += 1
         if ctx.if_statement_in_loop():
             return self.visit(ctx.if_statement_in_loop())
         elif ctx.for_statement():
@@ -222,9 +217,7 @@ void {name}({self.visit(ctx.parameter_list())}); {{
             return f"{ctx.IDENTIFIER().getText()}();"
 
     def visitIf_statement(self, ctx):
-        tabs = self.tab_counter * '\t'
-        self.tab_counter -= 1
-        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
+        statements = [f'{self.visit(f)}' for f in ctx.statement()]
         if ctx.else_statement():
             return f"""
 if ({self.visit(ctx.logical_expression())}) {{
@@ -240,9 +233,7 @@ if ({self.visit(ctx.logical_expression())}) {{
 }}""".strip()
 
     def visitElse_statement(self, ctx):
-        tabs = self.tab_counter * '\t'
-        self.tab_counter -= 1
-        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
+        statements = [f'{self.visit(f)}' for f in ctx.statement()]
         return f"""
 else {{
 
@@ -250,20 +241,16 @@ else {{
 }}""".strip()
 
     def visitFor_statement(self, ctx):
-        tabs = self.tab_counter * '\t'
-        self.tab_counter -= 1
         iterator = self.visit(ctx.lvalue())
         start = self.visit(ctx.math_expression(0))
         end = self.visit(ctx.math_expression(1))
-        body = [f'{tabs}{self.visit(stmt)}' for stmt in ctx.statement_in_loop()]
+        body = [f'{self.visit(stmt)}' for stmt in ctx.statement_in_loop()]
         joined = "\n".join(body)
 
         return f"for (int {iterator} = {start}; {iterator} <= {end}; {iterator}++) {{\n{joined}\n}}"
 
     def visitIf_statement_in_loop(self, ctx):
-        tabs = self.tab_counter * '\t'
-        self.tab_counter -= 1
-        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement_in_loop()]
+        statements = [f'{self.visit(f)}' for f in ctx.statement_in_loop()]
         if ctx.else_statement_in_loop():
             return f"""
 if ({self.visit(ctx.logical_expression())}) {{
@@ -279,9 +266,7 @@ if ({self.visit(ctx.logical_expression())}) {{
 }}""".strip()
 
     def visitElse_statement_in_loop(self, ctx):
-        tabs = self.tab_counter * '\t'
-        self.tab_counter -= 1
-        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement_in_loop()]
+        statements = [f'{self.visit(f)}' for f in ctx.statement_in_loop()]
         return f"""
 else {{
 
@@ -289,9 +274,7 @@ else {{
 }}""".strip()
 
     def visitWhile_statement(self, ctx):
-        tabs = self.tab_counter * '\t'
-        self.tab_counter -= 1
-        statements = [f'{tabs}{self.visit(f)}' for f in ctx.statement()]
+        statements = [f'{self.visit(f)}' for f in ctx.statement()]
         return f"""
 while ({self.visit(ctx.logical_expression())}) {{
 
@@ -362,7 +345,22 @@ while ({self.visit(ctx.logical_expression())}) {{
             raise Exception("Unknown statement type")
 
 
+tab_counter = 0
 generated_c = CodeGenerator().visit(tree)
+generated_c2 = ""
+for line in generated_c.splitlines():
+
+    if '{' in line:
+        line = ('\t' * tab_counter) + line
+        generated_c2 = generated_c2 + line + '\n'
+        tab_counter = tab_counter + 1
+    elif '}' in line:
+        tab_counter = tab_counter - 1
+        line = ('\t' * tab_counter) + line
+        generated_c2 = generated_c2 + line + '\n'
+    else:
+        line = ('\t' * tab_counter) + line
+        generated_c2 = generated_c2 + line + '\n'
 
 with open("output.c", "w") as f:
-    f.write(generated_c)
+    f.write(generated_c2)
