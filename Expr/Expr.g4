@@ -212,10 +212,20 @@ boolean_value
     : (comparison_expression | BOOLEAN_TRUE_LIT | BOOLEAN_FALSE_LIT)
     ;
 
-  //NAWIASOWANIE!!!!
+//logical_expression
+//    : boolean_value ((AND_LOGICAL_OP | OR_LOGICAL_OP) logical_expression)*
+//    | LEFT_PAREN logical_expression RIGHT_PAREN
+//    ;
+
+
 logical_expression
-    : boolean_value ((AND_LOGICAL_OP | OR_LOGICAL_OP) logical_expression)*
+    : boolean_value and_or_expression*
     | LEFT_PAREN logical_expression RIGHT_PAREN
+    ;
+
+and_or_expression
+    : AND_LOGICAL_OP logical_expression
+    | OR_LOGICAL_OP logical_expression
     ;
 
 boolean_operator

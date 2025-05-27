@@ -305,6 +305,15 @@ class ExprListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ExprParser#and_or_expression.
+    def enterAnd_or_expression(self, ctx:ExprParser.And_or_expressionContext):
+        pass
+
+    # Exit a parse tree produced by ExprParser#and_or_expression.
+    def exitAnd_or_expression(self, ctx:ExprParser.And_or_expressionContext):
+        pass
+
+
     # Enter a parse tree produced by ExprParser#boolean_operator.
     def enterBoolean_operator(self, ctx:ExprParser.Boolean_operatorContext):
         pass

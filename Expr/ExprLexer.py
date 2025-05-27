@@ -21,8 +21,8 @@ def serializedATN():
         buf.write("\4;\t;\4<\t<\4=\t=\4>\t>\4?\t?\3\2\3\2\3\2\3\2\3\2\3\2")
         buf.write("\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3")
         buf.write("\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\6")
-        buf.write("\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3")
-        buf.write("\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t")
+        buf.write("\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3")
+        buf.write("\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t")
         buf.write("\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3")
         buf.write("\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3")
         buf.write("\f\3\r\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3")
@@ -68,8 +68,8 @@ def serializedATN():
         buf.write("\2\2\2\2i\3\2\2\2\2k\3\2\2\2\2m\3\2\2\2\2o\3\2\2\2\2q")
         buf.write("\3\2\2\2\2s\3\2\2\2\2u\3\2\2\2\2w\3\2\2\2\2y\3\2\2\2\2")
         buf.write("{\3\2\2\2\2}\3\2\2\2\3\177\3\2\2\2\5\u0087\3\2\2\2\7\u008e")
-        buf.write("\3\2\2\2\t\u0098\3\2\2\2\13\u009f\3\2\2\2\r\u00a9\3\2")
-        buf.write("\2\2\17\u00b2\3\2\2\2\21\u00b9\3\2\2\2\23\u00be\3\2\2")
+        buf.write("\3\2\2\2\t\u0098\3\2\2\2\13\u009f\3\2\2\2\r\u00a6\3\2")
+        buf.write("\2\2\17\u00b0\3\2\2\2\21\u00b9\3\2\2\2\23\u00be\3\2\2")
         buf.write("\2\25\u00c4\3\2\2\2\27\u00cd\3\2\2\2\31\u00d4\3\2\2\2")
         buf.write("\33\u00d9\3\2\2\2\35\u00e5\3\2\2\2\37\u00e7\3\2\2\2!\u00f2")
         buf.write("\3\2\2\2#\u00f6\3\2\2\2%\u00f9\3\2\2\2\'\u0100\3\2\2\2")
@@ -95,15 +95,15 @@ def serializedATN():
         buf.write("\u0095\7p\2\2\u0095\u0096\7v\2\2\u0096\u0097\7g\2\2\u0097")
         buf.write("\b\3\2\2\2\u0098\u0099\7F\2\2\u0099\u009a\7q\2\2\u009a")
         buf.write("\u009b\7r\2\2\u009b\u009c\7r\2\2\u009c\u009d\7k\2\2\u009d")
-        buf.write("\u009e\7q\2\2\u009e\n\3\2\2\2\u009f\u00a0\7E\2\2\u00a0")
-        buf.write("\u00a1\7c\2\2\u00a1\u00a2\7t\2\2\u00a2\u00a3\7c\2\2\u00a3")
-        buf.write("\u00a4\7v\2\2\u00a4\u00a5\7v\2\2\u00a5\u00a6\7g\2\2\u00a6")
-        buf.write("\u00a7\7t\2\2\u00a7\u00a8\7g\2\2\u00a8\f\3\2\2\2\u00a9")
-        buf.write("\u00aa\7D\2\2\u00aa\u00ab\7q\2\2\u00ab\u00ac\7q\2\2\u00ac")
-        buf.write("\u00ad\7n\2\2\u00ad\u00ae\7g\2\2\u00ae\u00af\7c\2\2\u00af")
-        buf.write("\u00b0\7p\2\2\u00b0\u00b1\7q\2\2\u00b1\16\3\2\2\2\u00b2")
-        buf.write("\u00b3\7I\2\2\u00b3\u00b4\7t\2\2\u00b4\u00b5\7c\2\2\u00b5")
-        buf.write("\u00b6\7p\2\2\u00b6\u00b7\7f\2\2\u00b7\u00b8\7g\2\2\u00b8")
+        buf.write("\u009e\7q\2\2\u009e\n\3\2\2\2\u009f\u00a0\7I\2\2\u00a0")
+        buf.write("\u00a1\7t\2\2\u00a1\u00a2\7c\2\2\u00a2\u00a3\7p\2\2\u00a3")
+        buf.write("\u00a4\7f\2\2\u00a4\u00a5\7g\2\2\u00a5\f\3\2\2\2\u00a6")
+        buf.write("\u00a7\7E\2\2\u00a7\u00a8\7c\2\2\u00a8\u00a9\7t\2\2\u00a9")
+        buf.write("\u00aa\7c\2\2\u00aa\u00ab\7v\2\2\u00ab\u00ac\7v\2\2\u00ac")
+        buf.write("\u00ad\7g\2\2\u00ad\u00ae\7t\2\2\u00ae\u00af\7g\2\2\u00af")
+        buf.write("\16\3\2\2\2\u00b0\u00b1\7D\2\2\u00b1\u00b2\7q\2\2\u00b2")
+        buf.write("\u00b3\7q\2\2\u00b3\u00b4\7n\2\2\u00b4\u00b5\7g\2\2\u00b5")
+        buf.write("\u00b6\7c\2\2\u00b6\u00b7\7p\2\2\u00b7\u00b8\7q\2\2\u00b8")
         buf.write("\20\3\2\2\2\u00b9\u00ba\7X\2\2\u00ba\u00bb\7g\2\2\u00bb")
         buf.write("\u00bc\7t\2\2\u00bc\u00bd\7q\2\2\u00bd\22\3\2\2\2\u00be")
         buf.write("\u00bf\7H\2\2\u00bf\u00c0\7c\2\2\u00c0\u00c1\7n\2\2\u00c1")
@@ -217,9 +217,9 @@ class ExprLexer(Lexer):
     INT_TP = 2
     FLOAT_TP = 3
     DOUBLE_TP = 4
-    CHAR_TP = 5
-    BOOL_TP = 6
-    LONG_TP = 7
+    LONG_TP = 5
+    CHAR_TP = 6
+    BOOL_TP = 7
     BOOLEAN_TRUE_LIT = 8
     BOOLEAN_FALSE_LIT = 9
     FUNCTION_KW = 10
@@ -281,8 +281,8 @@ class ExprLexer(Lexer):
     modeNames = [ "DEFAULT_MODE" ]
 
     literalNames = [ "<INVALID>",
-            "'Piccolo'", "'Intero'", "'Flottante'", "'Doppio'", "'Carattere'", 
-            "'Booleano'", "'Grande'", "'Vero'", "'Falso'", "'Funzione'", 
+            "'Piccolo'", "'Intero'", "'Flottante'", "'Doppio'", "'Grande'", 
+            "'Carattere'", "'Booleano'", "'Vero'", "'Falso'", "'Funzione'", 
             "'inizio'", "'fine'", "'se'", "'altrimenti'", "'per'", "'a''", 
             "'mentre'", "'continua'", "'ferma'", "'ritorna'", "'eccezione'", 
             "'principale'", "'no'", "'Scriviere'", "'Caricare'", "'\"'", 
@@ -292,8 +292,8 @@ class ExprLexer(Lexer):
             "','", "';'" ]
 
     symbolicNames = [ "<INVALID>",
-            "SHORT_TP", "INT_TP", "FLOAT_TP", "DOUBLE_TP", "CHAR_TP", "BOOL_TP", 
-            "LONG_TP", "BOOLEAN_TRUE_LIT", "BOOLEAN_FALSE_LIT", "FUNCTION_KW", 
+            "SHORT_TP", "INT_TP", "FLOAT_TP", "DOUBLE_TP", "LONG_TP", "CHAR_TP", 
+            "BOOL_TP", "BOOLEAN_TRUE_LIT", "BOOLEAN_FALSE_LIT", "FUNCTION_KW", 
             "BEGIN_KW", "END_KW", "IF_KW", "DO_KW", "ELSE_KW", "FOR_KW", 
             "TO_KW", "WHILE_KW", "CONTINUE_KW", "BREAK_KW", "RETURN_KW", 
             "EXCEPTION_KW", "MAIN_KW", "NO_KW", "WRITE_KW", "READ_KW", "IDENTIFIER", 
@@ -307,8 +307,8 @@ class ExprLexer(Lexer):
             "LEFT_PAREN", "RIGHT_PAREN", "LEFT_SQUARE", "RIGHT_SQUARE", 
             "COMMA", "SEMICOLON" ]
 
-    ruleNames = [ "SHORT_TP", "INT_TP", "FLOAT_TP", "DOUBLE_TP", "CHAR_TP", 
-                  "BOOL_TP", "LONG_TP", "BOOLEAN_TRUE_LIT", "BOOLEAN_FALSE_LIT", 
+    ruleNames = [ "SHORT_TP", "INT_TP", "FLOAT_TP", "DOUBLE_TP", "LONG_TP", 
+                  "CHAR_TP", "BOOL_TP", "BOOLEAN_TRUE_LIT", "BOOLEAN_FALSE_LIT", 
                   "FUNCTION_KW", "BEGIN_KW", "END_KW", "IF_KW", "DO_KW", 
                   "ELSE_KW", "FOR_KW", "TO_KW", "WHILE_KW", "CONTINUE_KW", 
                   "BREAK_KW", "RETURN_KW", "EXCEPTION_KW", "MAIN_KW", "NO_KW", 

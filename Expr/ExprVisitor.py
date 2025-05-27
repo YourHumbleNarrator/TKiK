@@ -174,6 +174,11 @@ class ExprVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ExprParser#and_or_expression.
+    def visitAnd_or_expression(self, ctx:ExprParser.And_or_expressionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ExprParser#boolean_operator.
     def visitBoolean_operator(self, ctx:ExprParser.Boolean_operatorContext):
         return self.visitChildren(ctx)
