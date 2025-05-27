@@ -1,15 +1,11 @@
 #define bool int
 #include <stdio.h>
 
-void quicksort(int[False] array, int inizio1, int fine1) {
-	
-	if (wip) {
-		
+void quicksort(int[False] array, int inizio1, int fine1) {	
+	if (wip) {		
 		int pivot = array[fin];
 		int indice = inizio1-1;
-		for (int i = inizio1; i <= fine1-1; i++) {
-			if (wip) {
-				
+		for (int i = inizio1; i <= fine1-1; i++) {			if (wip) {				
 				indice = indice+1;
 				swap(array[indice], array[i]);
 			}
@@ -21,15 +17,13 @@ void quicksort(int[False] array, int inizio1, int fine1) {
 	}
 }
 
-void swap(int a, int b) {
-	
+void swap(int a, int b) {	
 	int temp = a;
 	a = b;
 	b = temp;
 }
 
-int main() {
-	
+int main() {	
 	int array[100];
 	int n;
 	bool temp = 1;
@@ -37,13 +31,11 @@ int main() {
 	printf ("Inserisci il numero di elementi: ");
 	scanf("%d", &n);
 	printf ("Inserisci gli elementi: ");
-	for (int i = 0; i <= n-1; i++) {
-		printf ("%d", array[i]);
+	for (int i = 0; i <= n-1; i++) {		printf ("%d", array[i]);
 	}
 	quicksort(array, 0, n-1);
 	printf ("Array ordinato: ");
-	for (int i = 0; i <= n-1; i++) {
-		printf ("%d", array[i]);
+	for (int i = 0; i <= n-1; i++) {		printf ("%d", array[i]);
 		printf (" ");
 	}
 	return 0;

@@ -352,7 +352,7 @@ for line in generated_c.splitlines():
 
     if '{' in line:
         line = ('\t' * tab_counter) + line
-        generated_c2 = generated_c2 + line + '\n'
+        generated_c2 = generated_c2 + line
         tab_counter = tab_counter + 1
     elif '}' in line:
         tab_counter = tab_counter - 1
