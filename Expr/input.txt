@@ -24,7 +24,7 @@ inizio
     fine;
 fine;
 
-Funzione quicksort(Intero []array, Intero inizio1 ,Intero fine1) no ritorna
+Funzione quicksort(Intero array[], Intero inizio1 ,Intero fine1) no ritorna
 inizio
     se inizio1 < fine1 fai
     inizio
@@ -53,6 +53,66 @@ inizio
     b := temp;
 fine;
 
+Funzione add(Grande a, Grande b) ritorna Grande
+inizio
+    Grande result := a+b;
+    ritorna result;
+fine;
+
+Funzione subtract(Piccolo a, Piccolo b) ritorna Piccolo
+inizio
+    Piccolo result := a-b;
+    ritorna result;
+fine;
+
+Funzione multiply(Flottante a, Flottante b) ritorna Flottante
+inizio
+    Flottante result := a*b;
+    ritorna result;
+fine;
+
+Funzione divide(Doppio a, Doppio b) ritorna Doppio
+inizio
+    Doppio result := a/b;
+    ritorna result;
+fine;
+
+Funzione divideByTwo(Doppio a) ritorna Doppio
+inizio
+    Doppio result := a/2;
+    ritorna result;
+fine;
+
+Funzione printSymbols(Intero a, Carattere b, Carattere c) no ritorna
+inizio
+    per i := 0 a' b fai
+    inizio
+        se i % 2 = 0 fai
+        inizio
+            Scriviere("$b", Carattere);
+        fine;
+        altrimenti
+        inizio
+            Scriviere("$c", Carattere);
+        fine;
+    fine;
+fine;
+
+Funzione printEvenNumbersUpTo18() no ritorna
+inizio
+    per i := 0 a' 100 fai
+    inizio
+        se i % 2 = 1 fai
+        inizio
+            continua;
+        fine;
+        altrimenti
+        inizio
+            ferma;
+        fine;
+        Scriviere("$i", Intero);
+    fine;
+fine;
 
 
 

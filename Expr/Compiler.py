@@ -46,7 +46,6 @@ class CodeGenerator(ExprVisitor):
         body = self.visit(ctx.function_body())
         return f"""
 int main({params}) {{
-
 {body}
 return 0;
 }}""".strip()
@@ -54,25 +53,31 @@ return 0;
     def visitFunction_definition(self, ctx):
         name = ctx.IDENTIFIER().getText()
         if ctx.NO_KW():
+            type1 = "void"
+        else:
+            type1 = self.visit(ctx.type_specifier())
+        if ctx.parameter_list():
             return f"""
-void {name}({self.visit(ctx.parameter_list())}) {{
-
+{type1} {name}({self.visit(ctx.parameter_list())}) {{
 {self.visit(ctx.function_body())}
 }}""".strip()
         else:
-            return "//TODO"
+            return f"""
+{type1} {name}() {{
+{self.visit(ctx.function_body())}
+}}""".strip()
 
     def visitParameter_list(self, ctx):
         if ctx.COMMA():
             additional_params = [f", {self.visit(f)}" for f in ctx.parameter()[1:]]
             return f"{self.visit(ctx.parameter()[0])}{"".join(additional_params)}"
         else:
-            return self.visit(ctx.parameter())
+            return self.visit(ctx.parameter(0))
 
     def visitParameter(self, ctx):
         if ctx.LEFT_SQUARE():
-            squares = ["[]" in range(len(ctx.LEFT_SQUARE()))]
-            return f"{self.visit(ctx.type_specifier())}{squares} {ctx.IDENTIFIER().getText()}"
+            squares = ["[]" for _ in range(len(ctx.LEFT_SQUARE()))]
+            return f"{self.visit(ctx.type_specifier())} {ctx.IDENTIFIER().getText()}{"".join(squares)}"
         else:
             return f"{self.visit(ctx.type_specifier())} {ctx.IDENTIFIER().getText()}"
 
@@ -211,7 +216,8 @@ void {name}({self.visit(ctx.parameter_list())}) {{
     def visitFunction_call(self, ctx):
         expressions = ctx.expression()
         if expressions:
-            args = ", ".join([self.visit(e) for e in expressions])
+            args = ",".join([self.visit(e) for e in expressions])
+            args = args.replace(",", ", ")
             return f"{ctx.IDENTIFIER().getText()}({args});"
         else:
             return f"{ctx.IDENTIFIER().getText()}();"
@@ -274,11 +280,10 @@ else {{
 }}""".strip()
 
     def visitWhile_statement(self, ctx):
-        statements = [f'{self.visit(f)}' for f in ctx.statement()]
+        statements = [f'{self.visit(f)}' for f in ctx.statement_in_loop()]
         return f"""
 while ({self.visit(ctx.logical_expression())}) {{
-
-{statements}
+{"\n".join(statements)}
 }}""".strip()
 
     def visitReturn_statement(self, ctx):
@@ -286,9 +291,10 @@ while ({self.visit(ctx.logical_expression())}) {{
 
     def visitLvalue(self, ctx):
         base = ctx.IDENTIFIER().getText()
-        indices = [self.visit(expr) for expr in ctx.math_expression()]
-        for idx in indices:
-            base += f"[{idx}]"
+        if ctx.math_expression():
+            indices = [self.visit(expr) for expr in ctx.math_expression()]
+            for idx in indices:
+                base += f"[{idx}]"
         return base
 
     def visitExpression(self, ctx):
@@ -310,9 +316,23 @@ while ({self.visit(ctx.logical_expression())}) {{
 
     def visitComparison_expression(self, ctx):
         if ctx.LEFT_PAREN():
-            return f"({self.visit(ctx.math_expression())} {self.visit(ctx.boolean_operator())} {self.visit(ctx.math_expression())})"
+            return f"({self.visit(ctx.math_expression(0))} {self.visit(ctx.boolean_operator())} {self.visit(ctx.math_expression(1))})"
         else:
-            return f"{self.visit(ctx.math_expression())} {self.visit(ctx.boolean_operator())} {self.visit(ctx.math_expression())}"
+            return f"{self.visit(ctx.math_expression(0))} {self.visit(ctx.boolean_operator())} {self.visit(ctx.math_expression(1))}"
+
+    def visitBoolean_operator(self, ctx):
+        if ctx.EQUAL_BOOL_OP():
+            return "=="
+        elif ctx.NOT_EQ_BOOL_OP():
+            return "!="
+        elif ctx.GREATER_BOOL_OP():
+            return ">"
+        elif ctx.GREATER_EQ_BOOL_OP():
+            return ">="
+        elif ctx.LESS_BOOL_OP():
+            return "<"
+        else:
+            return "<="
 
     def visitBoolean_value(self, ctx):
         if ctx.BOOLEAN_TRUE_LIT():
@@ -352,7 +372,7 @@ for line in generated_c.splitlines():
 
     if '{' in line:
         line = ('\t' * tab_counter) + line
-        generated_c2 = generated_c2 + line
+        generated_c2 = generated_c2 + line + '\n'
         tab_counter = tab_counter + 1
     elif '}' in line:
         tab_counter = tab_counter - 1

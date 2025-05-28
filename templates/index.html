@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kompilator ANTLR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <button id="compile-btn">Kompiluj</button>
+    <textarea id="editor">//</textarea>
+    <pre id="output"></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/mode/simple.min.js"></script>
+    <script src="{{ url_for('static', filename='mylang.js') }}"></script>
+
+
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            lineNumbers: true,
+            mode: "mylang",
+            theme: "default"
+        });
+
+        document.getElementById("compile-btn").addEventListener("click", () => {
+            fetch("/compile", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `source=${encodeURIComponent(editor.getValue())}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("output").textContent = data.output;
+            });
+        });
+    </script>
+</body>
+</html>
+

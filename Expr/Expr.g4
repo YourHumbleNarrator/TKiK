@@ -1,4 +1,5 @@
 grammar Expr;
+//TODO: funkcja swap przyjmująca dwa elementy i nazwe typu
 
 program
     : main_function_definition
@@ -30,7 +31,7 @@ parameter_list
     ;
 
 parameter
-    : type_specifier ( LEFT_SQUARE RIGHT_SQUARE )* IDENTIFIER
+    : type_specifier  IDENTIFIER ( LEFT_SQUARE RIGHT_SQUARE )*
     ;
 
 type_specifier
@@ -68,7 +69,7 @@ statement
 simple_statement
     : local_variable_declaration
     | assignment_statement
-    | function_call
+    | function_call SEMICOLON
     | return_statement
     | write_function
     | read_function
@@ -106,8 +107,8 @@ assignment_statement
     ;
 
 function_call
-    : IDENTIFIER LEFT_PAREN RIGHT_PAREN SEMICOLON
-    | IDENTIFIER LEFT_PAREN expression (COMMA expression)* RIGHT_PAREN SEMICOLON
+    : IDENTIFIER LEFT_PAREN RIGHT_PAREN
+    | IDENTIFIER LEFT_PAREN expression (COMMA expression)* RIGHT_PAREN
     ;
 
 if_statement
@@ -211,11 +212,6 @@ comparison_expression
 boolean_value
     : (comparison_expression | BOOLEAN_TRUE_LIT | BOOLEAN_FALSE_LIT)
     ;
-
-//logical_expression
-//    : boolean_value ((AND_LOGICAL_OP | OR_LOGICAL_OP) logical_expression)*
-//    | LEFT_PAREN logical_expression RIGHT_PAREN
-//    ;
 
 
 logical_expression
