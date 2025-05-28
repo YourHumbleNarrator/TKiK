@@ -1,17 +1,16 @@
-# Kompilator własnego języka Gava 🤌 do C
+# Kompilator własnego języka Giava 🤌 do C
 - Berenike Banek berenike@student.agh.edu.pl
 - Mateusz Bielówka mbielowka@student.agh.edu.pl
 
-(nowy opis tutaj)
 ## 🏆 Cel projektu
-Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem słów kluczowych w języku włoskim. Gava łączy elementy języków wywodzących się z C, oraz Ady, co sprawia, że jest on bardziej intuicyjny i łatwiejszy do nauki dla osób początkujących.
+Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem słów kluczowych w języku włoskim. Giava 🤌 łączy elementy języków wywodzących się z C, oraz Ady, co sprawia, że jest on bardziej intuicyjny i łatwiejszy do nauki dla osób początkujących.
 
-## 💻📄📒 Sprawy techniczne
-- Typ translatroa - kompilator (Gava 🡒 C)
+## 🛠️ Sprawy techniczne
+- Typ translatroa - kompilator (Giava 🤌 🡒 C)
 - Język implementacji - `Python`
 - Generator skanerów i parserów - `ANTLR4`
 
-## 🖇️🧾📜 Wykaz tokenów
+## 📜 Wykaz tokenów
 
 | Kod Tokena | Wartość Tokena | Opis |
 |---|---|---|
@@ -112,11 +111,133 @@ Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem 
 ## 🅰️ Gramatyka
 work in progress
 
+## 💻 Przykładowy kod
+
+```
+Funzione principale()
+inizio
+
+    Intero array[100];
+    Intero n;
+    Booleano temp := Vero;
+    Booleano temp2 := (3>2) o' (2<3);
+
+    Scriviere("Inserisci il numero di elementi: ");
+    Caricare("$n",Intero);
+    Scriviere("Inserisci gli elementi: ");
+
+    per i:= 0 a' n - 1 fai
+    inizio
+        Scriviere("$array[i]",Intero);
+    fine;
+
+    quicksort(array, 0, n - 1);
+    Scriviere("Array ordinato: ");
+
+    per i:= 0 a' n - 1 fai
+    inizio
+        Scriviere("$array[i]",Intero);
+        Scriviere(" ");
+    fine;
+
+    Intero i := 10;
+    mentre i < 14
+    inizio
+        Grande additionResult := add(60, i);
+        Scriviere("$additionResult", Grande);
+        Piccolo subtractionResult := subtract(60, i);
+        Scriviere("$subtractionResult", Piccolo);
+        Flottante multiplicationResult := multiply(60, i);
+        Scriviere("$multiplicationResult", Flottante);
+        Doppio divisionResult := divideByTwo(i);
+        Scriviere("$divisionResult", Doppio);
+        i := i + 1;
+    fine;
+
+    Carattere symbol;
+    Caricare("$symbol", Carattere);
+
+    se symbol = '#' fai
+    inizio
+        Scriviere("You chose the # symbol :D");
+    fine;
+    altrimenti
+    inizio
+        Scriviere("$symbol", Carattere);
+    fine;
+
+fine;
+
+Funzione quicksort(Intero array[], Intero inizio1 ,Intero fine1) no ritorna
+inizio
+
+    se inizio1 < fine1 fai
+    inizio
+        Intero pivot := array[fin];
+        Intero indice := inizio1 - 1;
+        per i := inizio1 a' fine1 - 1 fai
+        inizio
+            se array[i] < pivot fai
+            inizio
+                indice := indice + 1;
+                swap(array[indice], array[i]);
+            fine;
+        fine;
+            swap(array[indice + 1], array[fin]);
+            Intero partizione := indice + 1;
+            quicksort(array, inizio1, partizione - 1);
+            quicksort(array, partizione + 1, fine1);
+    fine;
+
+fine;
+
+Funzione swap(Intero a,Intero b) no ritorna
+inizio
+    Intero temp := a;
+    a := b;
+    b := temp;
+fine;
+
+Funzione add(Grande a, Grande b) ritorna Grande
+inizio
+    Grande result := a+b;
+    ritorna result;
+fine;
+
+Funzione subtract(Piccolo a, Piccolo b) ritorna Piccolo
+inizio
+    Piccolo result := a-b;
+    ritorna result;
+fine;
+
+Funzione multiply(Flottante a, Flottante b) ritorna Flottante
+inizio
+    Flottante result := a*b;
+    ritorna result;
+fine;
+
+Funzione divideByTwo(Doppio a) ritorna Doppio
+inizio
+    Doppio result := a/2;
+    ritorna result;
+fine;
+
+Funzione printEvenNumbersUpTo18() no ritorna
+inizio
+    per i := 0 a' 100 fai
+    inizio
+        se i % 2 = 1 fai
+        inizio
+            continua;
+        fine;
+        altrimenti
+        inizio
+            ferma;
+        fine;
+        Scriviere("$i", Intero);
+    fine;
+fine;
+```
+
 ## 🔎 Instrukcja obsługi
 work in progress
-
-## Wstępne uwagi:
-- `inizio` - `fine` oddzielają ciąg poleceń wykonywany wramach danej pętli/funkcji/instrukcji warunkowej
-- Funzione - definiuje nową funkcję.
-- Scrivi - funkcja do wypisywania.
-- Typ funkcji określony jest przy zwracaniu wartości i musi być użyty konsekwentnie przy każdym ritorna (np. ritorna Intero 5;) jeśli to słowo nie wystąpi funkcja jest typu void.
