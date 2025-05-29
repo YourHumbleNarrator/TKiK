@@ -241,3 +241,6 @@ fine;
 
 ## 🔎 Instrukcja obsługi
 work in progress
+
+## FIXME
+else w przykładowym kodzie, exception w wykazie tokenów
