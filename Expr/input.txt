@@ -72,6 +72,7 @@ inizio
             quicksort(array, partizione + 1, fine1);
     fine;
 fine;
+
 Funzione swap(Intero a,Intero b) no ritorna
 inizio
     Intero temp := a;
@@ -134,9 +135,8 @@ inizio
         fine;
         altrimenti
         inizio
-            ferma;
+            Scriviere("$i", Intero);
         fine;
-        Scriviere("$i", Intero);
     fine;
 fine;
 

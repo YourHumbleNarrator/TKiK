@@ -6,7 +6,7 @@
 Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem słów kluczowych w języku włoskim. Giava 🤌 łączy elementy języków wywodzących się z C, oraz Ady, co sprawia, że jest on bardziej intuicyjny i łatwiejszy do nauki dla osób początkujących.
 
 ## 🛠️ Sprawy techniczne
-- Typ translatroa - kompilator (Giava 🤌 🡒 C)
+- Typ translatora - kompilator (Giava 🤌 🡒 C)
 - Język implementacji - `Python`
 - Generator skanerów i parserów - `ANTLR4`
 
@@ -36,7 +36,7 @@ Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem 
 | TCHAR_LIT | '[^']' | Literał dla znaku |
 | QUOT_MARK | " | Symbol cudzysłowia |
 | PARAMETER | $ | Symbol parametru |
-| TEXT_IN_QUOTES | " ( '\\' [nt\\'";] | ~["\\$;,] )* " | Tekst |
+| TEXT_IN_QUOTES | " ( '\\' [nt\\'";] \| ~["\\$;,] )* " | Tekst |
 | LINE_COMMENT | !! | Komentarz jednoliniowy |
 | BLOCK_COMMENT | '!!-' .*? '-!!' | Komentarz blokowy |
 | W_S | [ \t\r\n]+ | Pusta przestrzeń |
@@ -224,7 +224,7 @@ fine;
 
 Funzione printEvenNumbersUpTo18() no ritorna
 inizio
-    per i := 0 a' 100 fai
+    per i := 0 a' 19 fai
     inizio
         se i % 2 = 1 fai
         inizio
@@ -232,12 +232,14 @@ inizio
         fine;
         altrimenti
         inizio
-            ferma;
+            Scriviere("$i", Intero);
         fine;
-        Scriviere("$i", Intero);
     fine;
 fine;
 ```
 
 ## 🔎 Instrukcja obsługi
 work in progress
+
+## FIXME
+else w przykładowym kodzie, exception w wykazie tokenów
