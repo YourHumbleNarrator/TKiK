@@ -109,7 +109,13 @@ Celem projektu było stworzenie języka do nauki programowania z wykorzystaniem 
 | SEMICOLON | ; | Separator ';' |
 
 ## 🅰️ Gramatyka
-work in progress
+
+Spis tokenów jest zdefiniowany w pliku: [Expr/Expr.tokens](/Expr/Expr.tokens)
+
+Gramatyka jest zdefiniowana w pliku: [Expr/Expr.g4](/Expr/Expr.g4)
+
+Na jej podstawei ANTLR4 wygenerował pliki Parser i Lexer z tego samego folderu
+
 
 ## 💻 Przykładowy kod
 
@@ -119,8 +125,6 @@ inizio
 
     Intero array[100];
     Intero n;
-    Booleano temp := Vero;
-    Booleano temp2 := (3>2) o' (2<3);
 
     Scriviere("Inserisci il numero di elementi: ");
     Caricare("$n",Intero);
@@ -128,7 +132,7 @@ inizio
 
     per i:= 0 a' n - 1 fai
     inizio
-        Scriviere("$array[i]",Intero);
+        Caricare("$array[i]",Intero);
     fine;
 
     quicksort(array, 0, n - 1);
@@ -140,31 +144,10 @@ inizio
         Scriviere(" ");
     fine;
 
-    Intero i := 10;
-    mentre i < 14
-    inizio
-        Grande additionResult := add(60, i);
-        Scriviere("$additionResult", Grande);
-        Piccolo subtractionResult := subtract(60, i);
-        Scriviere("$subtractionResult", Piccolo);
-        Flottante multiplicationResult := multiply(60, i);
-        Scriviere("$multiplicationResult", Flottante);
-        Doppio divisionResult := divideByTwo(i);
-        Scriviere("$divisionResult", Doppio);
-        i := i + 1;
-    fine;
-
-    Carattere symbol;
-    Caricare("$symbol", Carattere);
-
-    se symbol = '#' fai
-    inizio
-        Scriviere("You chose the # symbol :D");
-    fine;
-    altrimenti
-    inizio
-        Scriviere("$symbol", Carattere);
-    fine;
+    Grande additionResult := add(60, i);
+    Piccolo subtractionResult := subtract(60, i);
+    Flottante multiplicationResult := multiply(60, i);
+    Doppio divisionResult := divideByTwo(i);
 
 fine;
 
@@ -209,37 +192,7 @@ inizio
     Piccolo result := a-b;
     ritorna result;
 fine;
-
-Funzione multiply(Flottante a, Flottante b) ritorna Flottante
-inizio
-    Flottante result := a*b;
-    ritorna result;
-fine;
-
-Funzione divideByTwo(Doppio a) ritorna Doppio
-inizio
-    Doppio result := a/2;
-    ritorna result;
-fine;
-
-Funzione printEvenNumbersUpTo18() no ritorna
-inizio
-    per i := 0 a' 19 fai
-    inizio
-        se i % 2 = 1 fai
-        inizio
-            continua;
-        fine;
-        altrimenti
-        inizio
-            Scriviere("$i", Intero);
-        fine;
-    fine;
-fine;
 ```
 
 ## 🔎 Instrukcja obsługi
 work in progress
-
-## FIXME
-else w przykładowym kodzie, exception w wykazie tokenów
