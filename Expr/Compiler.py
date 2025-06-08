@@ -128,9 +128,9 @@ return 0;
                 specifier = "c"
             specifiers.append(f"%{specifier}")
         if ctx.TEXT_IN_QUOTES():
-            return f"printf ({ctx.TEXT_IN_QUOTES().getText()});"
+            return f"printf({ctx.TEXT_IN_QUOTES().getText()});"
         else:
-            return f"printf (\"{"".join(specifiers)}\"{"".join(expressions)});"
+            return f"printf(\"{"".join(specifiers)}\"{"".join(expressions)});"
 
     def visitRead_function(self, ctx):
         if ctx.type_specifier() == "short":
@@ -227,14 +227,12 @@ return 0;
         if ctx.else_statement():
             return f"""
 if ({self.visit(ctx.logical_expression())}) {{
-
 {"/n".join(statements)}
-{self.visit(ctx.else_statement())}
-}}""".strip()
+}}
+{self.visit(ctx.else_statement())}""".strip()
         else:
             return f"""
 if ({self.visit(ctx.logical_expression())}) {{
-
 {"\n".join(statements)}
 }}""".strip()
 
@@ -242,8 +240,7 @@ if ({self.visit(ctx.logical_expression())}) {{
         statements = [f'{self.visit(f)}' for f in ctx.statement()]
         return f"""
 else {{
-
-{statements}
+{"\n".join(statements)}
 }}""".strip()
 
     def visitFor_statement(self, ctx):
@@ -260,14 +257,12 @@ else {{
         if ctx.else_statement_in_loop():
             return f"""
 if ({self.visit(ctx.logical_expression())}) {{
-
 {"\n".join(statements)}
-{self.visit(ctx.else_statement_in_loop())}
-}}""".strip()
+}}
+{self.visit(ctx.else_statement_in_loop())}""".strip()
         else:
             return f"""
 if ({self.visit(ctx.logical_expression())}) {{
-
 {"\n".join(statements)}
 }}""".strip()
 
@@ -275,8 +270,7 @@ if ({self.visit(ctx.logical_expression())}) {{
         statements = [f'{self.visit(f)}' for f in ctx.statement_in_loop()]
         return f"""
 else {{
-
-{statements}
+{"\n".join(statements)}
 }}""".strip()
 
     def visitWhile_statement(self, ctx):
@@ -343,14 +337,17 @@ while ({self.visit(ctx.logical_expression())}) {{
             return self.visit(ctx.comparison_expression())
 
     def visitLogical_expression(self, ctx):
+        expressions = [f"{self.visit(f)}" for f in ctx.and_or_expression()]
         if ctx.LEFT_PAREN():
             return f"({self.visit(ctx.logical_expression())})"
-        # elif ctx.AND_LOGICAL_OP():
-        #     return f"{self.visit(ctx.boolean_value())} && {self.visit(ctx.logical_expression())})"
-        # else:
-        #     return f"{self.visit(ctx.boolean_value())} || {self.visit(ctx.logical_expression())})"
         else:
-            return "wip"
+            return f"{self.visit(ctx.boolean_value())}{"".join(expressions)}"
+
+    def visitAnd_or_expression(self, ctx):
+        if ctx.AND_LOGICAL_OP():
+            return f" && {self.visit(ctx.logical_expression())}"
+        else:
+            return f" || {self.visit(ctx.logical_expression())}"
 
     def visitLiteral(self, ctx):
         if ctx.INTEGER_LITERAL():

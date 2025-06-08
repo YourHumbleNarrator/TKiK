@@ -185,6 +185,8 @@ expression
 math_expression
     : SUB_MATH_OP? term (math_operator math_expression)*
     | LEFT_PAREN math_expression RIGHT_PAREN
+    | function_call
+    | CHAR_LITERAL
     ;
 
 term
@@ -263,7 +265,6 @@ WHILE_KW: 'mentre';
 CONTINUE_KW: 'continua';
 BREAK_KW: 'ferma';
 RETURN_KW: 'ritorna';
-EXCEPTION_KW: 'eccezione';
 MAIN_KW: 'principale';
 NO_KW: 'no';
 WRITE_KW: 'Scriviere';
