@@ -2,13 +2,11 @@
 #include <stdio.h>
 
 void quicksort(int array[], int inizio1, int fine1) {
-	if (wip) {
-		
+	if (inizio1 < fine1) {
 		int pivot = array[fin];
 		int indice = inizio1-1;
 		for (int i = inizio1; i <= fine1-1; i++) {
-			if (wip) {
-				
+			if (array[i] < pivot) {
 				indice = indice+1;
 				swap(array[indice], array[i]);
 			}
@@ -53,28 +51,24 @@ double divideByTwo(double a) {
 
 void printSymbols(int a, char b, char c) {
 	for (int i = 0; i <= b; i++) {
-		if (wip) {
-			
-			printf ("%c", b);
-			else {
-				
-				['printf ("%c", c);']
-			}
+		if (i%2 == 0) {
+			printf("%c", b);
+		}
+		else {
+			printf("%c", c);
 		}
 	}
 }
 
 void printEvenNumbersUpTo18() {
 	for (int i = 0; i <= 100; i++) {
-		if (wip) {
-			
+		if (i%2 == 1) {
 			continue;
-			else {
-				
-				['break;']
-			}
 		}
-		printf ("%d", i);
+		else {
+			break;
+		}
+		printf("%d", i);
 	}
 }
 
@@ -82,18 +76,38 @@ int main() {
 	int array[100];
 	int n;
 	bool temp = 1;
-	bool temp2 = wip;
-	printf ("Inserisci il numero di elementi: ");
+	bool temp2 = (3 > 2) || (2 < 3);
+	printf("Inserisci il numero di elementi: ");
 	scanf("%d", &n);
-	printf ("Inserisci gli elementi: ");
+	printf("Inserisci gli elementi: ");
 	for (int i = 0; i <= n-1; i++) {
-		printf ("%d", array[i]);
+		printf("%d", array[i]);
 	}
 	quicksort(array, 0, n-1);
-	printf ("Array ordinato: ");
+	printf("Array ordinato: ");
 	for (int i = 0; i <= n-1; i++) {
-		printf ("%d", array[i]);
-		printf (" ");
+		printf("%d", array[i]);
+		printf(" ");
+	}
+	int i = 10;
+	while (i < 14) {
+		long int additionResult = add(60,i);
+		printf("%li", additionResult);
+		short int subtractionResult = subtract(60,i);
+		printf("%hi", subtractionResult);
+		float multiplicationResult = multiply(60,i);
+		printf("%f", multiplicationResult);
+		double divisionResult = divide(60,i);
+		printf("%lf", divisionResult);
+		i = i+1;
+	}
+	char symbol;
+	scanf("%c", &symbol);
+	if (symbol == '#') {
+		printf("You chose the # symbol :D");
+	}
+	else {
+		printf("%c", symbol);
 	}
 	return 0;
 }
