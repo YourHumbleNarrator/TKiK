@@ -144,11 +144,6 @@ inizio
         Scriviere(" ");
     fine;
 
-    Grande additionResult := add(60, i);
-    Piccolo subtractionResult := subtract(60, i);
-    Flottante multiplicationResult := multiply(60, i);
-    Doppio divisionResult := divideByTwo(i);
-
 fine;
 
 Funzione quicksort(Intero array[], Intero inizio1 ,Intero fine1) no ritorna
@@ -179,18 +174,6 @@ inizio
     Intero temp := a;
     a := b;
     b := temp;
-fine;
-
-Funzione add(Grande a, Grande b) ritorna Grande
-inizio
-    Grande result := a+b;
-    ritorna result;
-fine;
-
-Funzione subtract(Piccolo a, Piccolo b) ritorna Piccolo
-inizio
-    Piccolo result := a-b;
-    ritorna result;
 fine;
 ```
 
