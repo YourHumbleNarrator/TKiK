@@ -1,0 +1,4 @@
+Funzione principale()
+inizio
+
+fine;

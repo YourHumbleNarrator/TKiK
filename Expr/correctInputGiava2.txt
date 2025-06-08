@@ -1,0 +1,32 @@
+Funzione principale()
+inizio
+
+    Doppio divisionResult1 := divideByTwo(100);
+    Doppio divisionResult2 := divideByTwo(divisionResult1);
+    Scriviere("$divisionResult1", Doppio);
+    Scriviere("$divisionResult2", Doppio);
+
+    printSymbols(10, #, $);
+
+fine;
+
+Funzione divideByTwo(Doppio a) ritorna Doppio
+inizio
+    Doppio result := a/2;
+    ritorna result;
+fine;
+
+Funzione printSymbols(Intero a, Carattere b, Carattere c) no ritorna
+inizio
+    per i := 0 a' a fai
+    inizio
+        se i % 2 = 0 fai
+        inizio
+            Scriviere("$b", Carattere);
+        fine;
+        altrimenti
+        inizio
+            Scriviere("$c", Carattere);
+        fine;
+    fine;
+fine;
