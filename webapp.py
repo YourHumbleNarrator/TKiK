@@ -13,7 +13,6 @@ def compile_code():
     with open("input.txt", "w") as f:
         f.write(source_code)
 
-    # Zakładam, że compiler.py generuje output.c
     subprocess.run(["python", "Expr/compiler.py"], check=True)
 
     with open("output.c", "r") as f:

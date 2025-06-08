@@ -1,15 +1,107 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Kompilator ANTLR</title>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">-->
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <button id="compile-btn">Kompiluj</button>-->
+<!--    <textarea id="editor">//</textarea>-->
+<!--    <pre id="output"></pre>-->
+
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/mode/simple.min.js"></script>-->
+<!--    <script src="{{ url_for('static', filename='mylang.js') }}"></script>-->
+
+
+<!--    <script>-->
+<!--        const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {-->
+<!--            lineNumbers: true,-->
+<!--            mode: "mylang",-->
+<!--            theme: "default"-->
+<!--        });-->
+
+<!--        document.getElementById("compile-btn").addEventListener("click", () => {-->
+<!--            fetch("/compile", {-->
+<!--                method: "POST",-->
+<!--                headers: { "Content-Type": "application/x-www-form-urlencoded" },-->
+<!--                body: `source=${encodeURIComponent(editor.getValue())}`-->
+<!--            })-->
+<!--            .then(res => res.json())-->
+<!--            .then(data => {-->
+<!--                document.getElementById("output").textContent = data.output;-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kompilator ANTLR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompilator języka Giava do C</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <button id="compile-btn">Kompiluj</button>
-    <textarea id="editor">//</textarea>
-    <pre id="output"></pre>
+
+    <div class="container">
+        <header class="header">
+            <div class="header-text">
+                <h1>Kompilator Języka Giava do C</h1>
+                <p>Zbudowany przy pomocy Generatora parserów ANTLR 4</p>
+            </div>
+            <div class="header-buttons">
+                <span class="skill-tag" id="compile-btn">Kompiluj</span>
+                <button id="load-btn">Wczytaj z pliku</button>
+                <button id="save-btn">Zapisz do pliku</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <aside class="sidebar">
+                <section class="main-section card fade-in" id="section0">
+                    <h2>Input</h2>
+                    <p>
+                        W okienku poniżej wpisz, bądź wczytaj z pliku kod programu w języku Giava.
+                    </p>
+                    <textarea id="editor"></textarea>
+                </section>
+            </aside>
+
+            <main class="main-column">
+                <section class="main-section card fade-in" id="section1">
+                    <h2>Komunikaty</h2>
+                    <p>
+                        Kompilacja przebiegła pomyślnie./Błąd kompilacji linijka...
+                    </p>
+
+                </section>
+
+                <section class="main-section card fade-in" id="section2">
+                    <h2>Output</h2>
+                    <p>
+                        Skompilowany kod zostanie umieszczony poniżej.
+                    </p>
+                    <pre id="output"></pre>
+                </section>
+            </main>
+        </div>
+
+        <footer class="footer">
+            I hereby consent to the processing of my personal data included in this application for the purposes of the recruitment process under the Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (GDPR).
+        </footer>
+
+    </div>
+
+<!--Skrypty:-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/mode/simple.min.js"></script>
@@ -35,6 +127,8 @@
             });
         });
     </script>
+
+
+
 </body>
 </html>
-

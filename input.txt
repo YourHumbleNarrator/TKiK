@@ -22,32 +22,6 @@ inizio
         Scriviere("$array[i]",Intero);
         Scriviere(" ");
     fine;
-
-
-    Intero i := 10;
-    mentre i < 14
-    inizio
-        Grande additionResult := add(60, i);
-        Scriviere("$additionResult", Grande);
-        Piccolo subtractionResult := subtract(60, i);
-        Scriviere("$subtractionResult", Piccolo);
-        Flottante multiplicationResult := multiply(60, i);
-        Scriviere("$multiplicationResult", Flottante);
-        Doppio divisionResult := divide(60, i);
-        Scriviere("$divisionResult", Doppio);
-        i := i + 1;
-    fine;
-
-    Carattere symbol;
-    Caricare("$symbol", Carattere);
-    se symbol = '#' fai
-    inizio
-        Scriviere("You chose the # symbol :D");
-    fine;
-    altrimenti
-    inizio
-        Scriviere("$symbol", Carattere);
-    fine;
 fine;
 
 Funzione quicksort(Intero array[], Intero inizio1 ,Intero fine1) no ritorna
@@ -144,4 +118,3 @@ fine;
 
 
 
-//
