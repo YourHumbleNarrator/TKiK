@@ -1,0 +1,31 @@
+Funzione principale()
+inizio
+
+    Grande first := 500;
+    Grande second := 250;
+    Grande result := add(first, second);
+    printEvenNumbersUpTo18()
+
+fine;
+
+
+Funzione add(Grande a, Grande b) ritorna Grande
+inizio
+    Grande result := a+b;
+fine;
+
+Funzione printEvenNumbersUpTo18() no ritorna
+inizio
+    per i := 0 a' 100 fai
+    inizio
+        se i % 2 = 1 fai
+        inizio
+            continua;
+        fine;
+        altrimenti
+        inizio
+            Scriviere("$i", Intero);
+        fine;
+    fine;
+    ritorna i;
+fine;
