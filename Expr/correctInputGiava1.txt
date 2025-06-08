@@ -3,8 +3,21 @@ inizio
 
     Intero array[100];
     Intero n;
+    Scriviere("Inserisci il numero di elementi: ");
+    Caricare("$n",Intero);
+
+    per i:= 0 a' n - 1 fai
+    inizio
+        Caricare("$array[i]", Intero);
+    fine;
 
     quicksort(array, 0, n - 1);
+
+    per i:= 0 a' n - 1 fai
+    inizio
+        Scriviere("$array[i]", Intero);
+        Scriviere(" ");
+    fine;
 
 fine;
 
