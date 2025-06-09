@@ -1,37 +1,4 @@
-from antlr4 import *
-from ExprLexer import ExprLexer
-from ExprParser import ExprParser
 from ExprVisitor import ExprVisitor
-
-with open('input.txt') as f:
-    input_code = f.read()
-input_stream = InputStream(input_code)
-
-lexer = ExprLexer(input_stream)
-token_stream = CommonTokenStream(lexer)
-parser = ExprParser(token_stream)
-
-tree = parser.program()
-
-"""
-ściąga
-sprawdzanie czy element istnieje jeśli nie jest konieczny:
-ctx.jakisstejtment()
-
-tekst z keyworda (tego drukowanymi):
-ctx.IDENTIFIER().getText()
-
-jeśli taki keyword występuje pare razy
-ctx.IDENTIFIER(index).getText()
-
-tekst z innej funkcji:
-self.visit(ctx.jakisstejtment())
-
-tekst z zachowanymi enterami i tabami f i 3 cudzysłowy
-tekst ze zmiennymi w klamerkach f i cudzysłów
-
-TODO: globalna zmienna zliczająca liczbe tabulacji w każdym complex_statement
-"""
 
 
 class CodeGenerator(ExprVisitor):
@@ -361,23 +328,3 @@ while ({self.visit(ctx.logical_expression())}) {{
         else:
             raise Exception("Unknown statement type")
 
-
-tab_counter = 0
-generated_c = CodeGenerator().visit(tree)
-generated_c2 = ""
-for line in generated_c.splitlines():
-
-    if '{' in line:
-        line = ('\t' * tab_counter) + line
-        generated_c2 = generated_c2 + line + '\n'
-        tab_counter = tab_counter + 1
-    elif '}' in line:
-        tab_counter = tab_counter - 1
-        line = ('\t' * tab_counter) + line
-        generated_c2 = generated_c2 + line + '\n'
-    else:
-        line = ('\t' * tab_counter) + line
-        generated_c2 = generated_c2 + line + '\n'
-
-with open("output.c", "w") as f:
-    f.write(generated_c2)

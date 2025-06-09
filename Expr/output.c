@@ -66,9 +66,8 @@ void printEvenNumbersUpTo18() {
 			continue;
 		}
 		else {
-			break;
+			printf("%d", i);
 		}
-		printf("%d", i);
 	}
 }
 

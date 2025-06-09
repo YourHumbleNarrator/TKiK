@@ -13,7 +13,7 @@ def compile_code():
     with open("input.txt", "w") as f:
         f.write(source_code)
 
-    subprocess.run(["python", "Expr/compiler.py"], check=True)
+    subprocess.run(["python", "Expr/compiler.py", "Expr/ErrorHandling.py"], check=True)
 
     with open("output.c", "r") as f:
         output_code = f.read()
