@@ -6,7 +6,7 @@ inizio
     Scriviere("$divisionResult1", Doppio);
     Scriviere("$divisionResult2", Doppio);
 
-    printSymbols(10, #, $);
+    printSymbols(10, '#', '$');
 
 fine;
 

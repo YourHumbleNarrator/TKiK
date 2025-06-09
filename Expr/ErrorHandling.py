@@ -16,13 +16,9 @@ class ErrorHandling(ExprVisitor):
         self.has_returned = None
 
     def visitProgram(self, ctx: ExprParser.ProgramContext):
-        if ctx.main_function_definition():
-            self.visit(ctx.main_function_definition())
-            self.variables.clear()
-            for f_def in ctx.function_definition():
-                self.visit(f_def)
-
-        print(self.function_arguments)
+        for f_def in ctx.function_definition():
+            self.visit(f_def)
+        self.visit(ctx.main_function_definition())
 
         if self.errors:
             raise Exception("Errori:\n" + "\n".join(self.errors))
@@ -31,7 +27,6 @@ class ErrorHandling(ExprVisitor):
         self.visit(ctx.function_body())
 
     def visitFunction_definition(self, ctx: ExprParser.Function_definitionContext):
-        print("1")
         self.variables.clear()
         self.function_name = ctx.IDENTIFIER().getText()
         self.function_line = ctx.start.line
@@ -41,14 +36,10 @@ class ErrorHandling(ExprVisitor):
             self.return_type = False
 
         if ctx.parameter_list():
-            print("2")
             self.visit(ctx.parameter_list())
         else:
-            print("3" + self.function_name)
-            # self.function_arguments.update({self.function_name: 0})
             self.function_arguments[self.function_name] = 0
         self.has_returned = False
-
 
         self.visit(ctx.function_body())
 
@@ -81,8 +72,7 @@ class ErrorHandling(ExprVisitor):
 
     def visitParameter_list(self, ctx: ExprParser.Parameter_listContext):
         self.number_of_arguments = len(ctx.parameter())
-        self.function_arguments.update({self.function_name: len(ctx.parameter())})
-        print(f'dict: {self.function_arguments}')
+        self.function_arguments[self.function_name] = len(ctx.parameter())
         for p in ctx.parameter():
             self.variables.add(self.visit(p))
 
@@ -125,12 +115,6 @@ class ErrorHandling(ExprVisitor):
             self.visit(ctx.lvalue())
 
     def visitFunction_call(self, ctx: ExprParser.Function_callContext):
-        print("ryż")
-        print(f"{ctx.IDENTIFIER().getText()}")
-
-        print(f"defined: {self.function_arguments}")
-
-        print(f"called : {len(ctx.expression())}")
         if self.function_arguments[ctx.IDENTIFIER().getText()] != len(ctx.expression()):
             line = ctx.IDENTIFIER().symbol.line
             self.errors.append(f"Function {self.function_name} should receive {self.number_of_arguments} "

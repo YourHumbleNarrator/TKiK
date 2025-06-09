@@ -2,7 +2,7 @@ Funzione principale()
 inizio
 
     Booleano falseValue := 0;
-    Booleano trueValue := subtract(6, 5);
+    Booleano trueValue := subtract(6, 5, 0);
     Intero x := multiply(1);
     Flottante randomNumber := Falso;
 

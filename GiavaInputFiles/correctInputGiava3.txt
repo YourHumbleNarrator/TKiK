@@ -1,0 +1,46 @@
+Funzione principale()
+inizio
+
+    Scriviere("Test math functions here");
+    Intero array[5];
+
+    per i:= 0 a' 5 fai
+    inizio
+        Caricare("$array[i]", Intero);
+    fine;
+
+    Intero max := max(array, 5);
+    insert(array, 5, 100, 2);
+
+    Scriviere("$max", Intero);
+    per i:= 0 a' 5 fai
+    inizio
+        Scriviere("$array[i]", Intero);
+    fine;
+
+fine;
+
+Funzione max(Intero array[], Intero length) ritorna Intero
+inizio
+    Intero max := -10000;
+    per i := 0 a' length fai
+    inizio
+        se array[i] > max fai
+        inizio
+            max := array[i];
+        fine;
+    fine;
+    ritorna max;
+fine;
+
+Funzione insert(Intero array[], Intero length, Intero value, Intero index) no ritorna
+inizio
+    per i := 0 a' length fai
+    inizio
+        se i = index fai
+        inizio
+            array[i] := value;
+            ferma;
+        fine;
+    fine;
+fine;
