@@ -4,7 +4,7 @@ inizio
     Grande first := 500;
     Grande second := 250;
     Grande result := add(first, second);
-    printEvenNumbersUpTo18()
+    printEvenNumbersUpTo18();
 
 fine;
 

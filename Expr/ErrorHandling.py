@@ -7,101 +7,161 @@ class ErrorHandling(ExprVisitor):
         super().__init__()
         self.errors = []
         self.variables = set()
-        self.variable_types = {}
+        self.function_name = None
+        self.function_line = 0
         self.return_type = None
-        self.type_specifier = None
-        self.number_of_arguments = {}
+        #self.type_specifier = None
+        self.number_of_arguments = 0
+        self.function_arguments = {}
+        self.has_returned = None
 
     def visitProgram(self, ctx: ExprParser.ProgramContext):
-        for f_def in ctx.function_definition():
-            self.visit(f_def)
+        if ctx.main_function_definition():
+            self.visit(ctx.main_function_definition())
+            self.variables.clear()
+            for f_def in ctx.function_definition():
+                self.visit(f_def)
+
+        print(self.function_arguments)
 
         if self.errors:
             raise Exception("Errori:\n" + "\n".join(self.errors))
 
+    def visitMain_function_definition(self, ctx:ExprParser.Main_function_definitionContext):
+        self.visit(ctx.function_body())
+
     def visitFunction_definition(self, ctx: ExprParser.Function_definitionContext):
-        if ctx.parameter_list():
-            self.number_of_arguments.update({ctx.IDENTIFIER().getText(): 1})
-        else:
-            self.number_of_arguments.update({ctx.IDENTIFIER().getText(): 0})
+        print("1")
+        self.variables.clear()
+        self.function_name = ctx.IDENTIFIER().getText()
+        self.function_line = ctx.start.line
         if ctx.type_specifier():
             self.return_type = True
         else:
             self.return_type = False
+
+        if ctx.parameter_list():
+            print("2")
+            self.visit(ctx.parameter_list())
+        else:
+            print("3" + self.function_name)
+            # self.function_arguments.update({self.function_name: 0})
+            self.function_arguments[self.function_name] = 0
+        self.has_returned = False
+
+
         self.visit(ctx.function_body())
 
     def visitFunction_body(self, ctx: ExprParser.Function_bodyContext):
         for s in ctx.statement():
             self.visit(s)
+        if not self.has_returned and self.return_type:
+            self.errors.append(f"Function {self.function_name} should return a value (line {self.function_line})")
 
     def visitStatement(self, ctx: ExprParser.StatementContext):
         if ctx.simple_statement():
             self.visit(ctx.simple_statement())
 
     def visitSimple_statement(self, ctx: ExprParser.Simple_statementContext):
-        if ctx.return_statement():
-            if not self.return_type:
-                line = ctx.return_statement().symbol.line
-                self.errors.append(f"This function should not return anything (line {line})")
-        else:
-            if self.return_type:
-                line = ctx.return_statement().symbol.line
-                self.errors.append(f"This function should return a value (line {line})")
+        if ctx.return_statement() and not self.return_type:
+            self.errors.append(f"Function {self.function_name} should not return anything (line {self.function_line})")
+        elif ctx.return_statement():
+            self.has_returned = True
         if ctx.local_variable_declaration():
             self.visit(ctx.local_variable_declaration())
+        if ctx.write_function():
+            self.visit(ctx.write_function())
+        if ctx.function_call():
+            self.visit(ctx.function_call())
+
+    def visitReturn_statement(self, ctx:ExprParser.Return_statementContext):
+        if ctx.RETURN_KW() and not self.return_type:
+            line = ctx.RETURN_KW().symbol.line
+            self.errors.append(f"This function should not return anything (line {line})")
+
+    def visitParameter_list(self, ctx: ExprParser.Parameter_listContext):
+        self.number_of_arguments = len(ctx.parameter())
+        self.function_arguments.update({self.function_name: len(ctx.parameter())})
+        print(f'dict: {self.function_arguments}')
+        for p in ctx.parameter():
+            self.variables.add(self.visit(p))
+
+    def visitParameter(self, ctx: ExprParser.ParameterContext):
+        return ctx.IDENTIFIER().getText()
 
     def visitLocal_variable_declaration(self, ctx: ExprParser.Local_variable_declarationContext):
-        var_name = ctx.lvalue()
+        var_name = ctx.lvalue().getText()
         if var_name in self.variables:
-            line = ctx.lvalue().symbol.line
+            line = ctx.lvalue().start.line
             self.errors.append(f"Variable '{var_name}' has already been declared (line {line})")
         else:
             self.variables.add(var_name)
         if ctx.expression():
             self.visit(ctx.type_specifier())
             self.visit(ctx.expression())
+        self.visit(ctx.lvalue())
 
     def visitLvalue(self, ctx: ExprParser.LvalueContext):
-        var_name = ctx.IDENTIFIER().getText()
-        if var_name not in self.variables:
-            line = ctx.IDENTIFIER().symbol.line if ctx.IDENTIFIER() else ctx.start.line
-            self.errors.append(f"Variable '{var_name}' has not been declared yet (line {line})")
+        if ctx.getText() not in self.variables:
+            line = ctx.IDENTIFIER().symbol.line
+            self.errors.append(f"Variable '{ctx.getText()}' has not been declared yet (line {line})")
 
-    def visitFunction_call(self, ctx: ExprParser.Function_callContext):
-        if ctx.expression():
-            if self.number_of_arguments[ctx.IDENTIFIER().getText()] == 0:
-                line = ctx.expression().symbol.line
-                self.errors.append(f"This function should not have any parameters (line {line})")
-        else:
-            if self.number_of_arguments[ctx.IDENTIFIER().getText()] == 1:
-                line = ctx.expression().symbol.line
-                self.errors.append(f"This function should have some parameters (line {line})")
-
-    def visitType_specifier(self, ctx: ExprParser.Type_specifierContext):
-        if ctx.BOOL_TP():
-            self.type_specifier = "logical"
-        elif ctx.CHAR_TP():
-            self.type_specifier = "character"
-        else:
-            self.type_specifier = "mathematical"
+    # def visitWrite_function(self, ctx: ExprParser.Write_functionContext):
+    #     if ctx.expression():
+    #         self.visit(ctx.expression())
 
     def visitExpression(self, ctx: ExprParser.ExpressionContext):
-        if ctx.math_expression() and self.type_specifier == "logical":
-            line = ctx.math_expression().symbol.line
-            self.errors.append(f"You cannot assign a number to a boolean variable (line {line})")
-        if ctx.math_expression() and self.type_specifier == "character":
-            line = ctx.math_expression().symbol.line
-            self.errors.append(f"You cannot assign a number to a char variable (line {line})")
-        if ctx.logical_expression() and self.type_specifier == "mathematical":
-            line = ctx.math_expression().symbol.line
-            self.errors.append(f"You cannot assign a boolean value to a number variable (line {line})")
-        if ctx.logical_expression() and self.type_specifier == "character":
-            line = ctx.math_expression().symbol.line
-            self.errors.append(f"You cannot assign a boolean value to a char variable (line {line})")
-        if ctx.CHAR_LITERAL() and self.type_specifier == "mathematical":
-            line = ctx.math_expression().symbol.line
-            self.errors.append(f"You cannot assign a character to a number variable (line {line})")
-        if ctx.CHAR_LITERAL() and self.type_specifier == "logical":
-            line = ctx.math_expression().symbol.line
-            self.errors.append(f"You cannot assign a character to a boolean variable (line {line})")
+        if ctx.math_expression():
+            self.visit(ctx.math_expression())
+
+    def visitMath_expression(self, ctx:ExprParser.Math_expressionContext):
+        if ctx.term():
+            self.visit(ctx.term())
+        if ctx.function_call():
+            self.visit(ctx.function_call())
+
+    def visitTerm(self, ctx:ExprParser.TermContext):
+        if ctx.lvalue():
+            self.visit(ctx.lvalue())
+
+    def visitFunction_call(self, ctx: ExprParser.Function_callContext):
+        print("ryż")
+        print(f"{ctx.IDENTIFIER().getText()}")
+
+        print(f"defined: {self.function_arguments}")
+
+        print(f"called : {len(ctx.expression())}")
+        if self.function_arguments[ctx.IDENTIFIER().getText()] != len(ctx.expression()):
+            line = ctx.IDENTIFIER().symbol.line
+            self.errors.append(f"Function {self.function_name} should receive {self.number_of_arguments} "
+                               f"arguments, but it received {len(ctx.expression())} (line {line})")
+
+
+    # def visitType_specifier(self, ctx: ExprParser.Type_specifierContext):
+    #     if ctx.BOOL_TP():
+    #         self.type_specifier = "logical"
+    #     elif ctx.CHAR_TP():
+    #         self.type_specifier = "character"
+    #     else:
+    #         self.type_specifier = "mathematical"
+
+    # def visitExpression(self, ctx: ExprParser.ExpressionContext):
+    #     if ctx.math_expression() and self.type_specifier == "logical":
+    #         line = ctx.math_expression().symbol.line
+    #         self.errors.append(f"You cannot assign a number to a boolean variable (line {line})")
+    #     if ctx.math_expression() and self.type_specifier == "character":
+    #         line = ctx.math_expression().symbol.line
+    #         self.errors.append(f"You cannot assign a number to a char variable (line {line})")
+    #     if ctx.logical_expression() and self.type_specifier == "mathematical":
+    #         line = ctx.math_expression().symbol.line
+    #         self.errors.append(f"You cannot assign a boolean value to a number variable (line {line})")
+    #     if ctx.logical_expression() and self.type_specifier == "character":
+    #         line = ctx.math_expression().symbol.line
+    #         self.errors.append(f"You cannot assign a boolean value to a char variable (line {line})")
+    #     if ctx.CHAR_LITERAL() and self.type_specifier == "mathematical":
+    #         line = ctx.math_expression().symbol.line
+    #         self.errors.append(f"You cannot assign a character to a number variable (line {line})")
+    #     if ctx.CHAR_LITERAL() and self.type_specifier == "logical":
+    #         line = ctx.math_expression().symbol.line
+    #         self.errors.append(f"You cannot assign a character to a boolean variable (line {line})")
 

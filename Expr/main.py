@@ -6,7 +6,7 @@ from ExprParser import ExprParser
 from ErrorHandling import ErrorHandling
 from tabulation import AddTabulation
 
-with open('input.txt') as f:
+with open('incorrectInputGiava3.txt') as f:
     input_code = f.read()
 input_stream = InputStream(input_code)
 
@@ -16,14 +16,17 @@ parser = ExprParser(token_stream)
 
 tree = parser.program()
 
+exception = False
 try:
     checker = ErrorHandling()
     checker.visit(tree)
 except Exception as e:
+    exception = True
     print(e)
 
-generated_c = CodeGenerator().visit(tree)
-generated_c2 = AddTabulation().tabulation(generated_c)
-
-with open("output.c", "w") as f:
-    f.write(generated_c2)
+# if not exception:
+#     generated_c = CodeGenerator().visit(tree)
+#     generated_c2 = AddTabulation().tabulation(generated_c)
+#
+#     with open("output.c", "w") as f:
+#         f.write(generated_c2)

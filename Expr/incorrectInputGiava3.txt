@@ -3,7 +3,7 @@ inizio
 
     Booleano falseValue := 0;
     Booleano trueValue := subtract(6, 5);
-
+    Intero x := multiply(1);
     Flottante randomNumber := Falso;
 
 fine;

@@ -1,8 +1,8 @@
 Funzione principale()
 inizio
 
-    Carattere symbol = "#";
-    Carattere symbol = "&";
+    Carattere symbol := '#';
+    Carattere symbol := '&';
 
     Scriviere("$number", Intero);
 
