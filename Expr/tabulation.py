@@ -1,6 +1,10 @@
-class AddTabulation():
+class AddTabulation:
 
-    def Tabulation(self, generated_c):
+    def tabulation(self, generated_c):
+
+        tab_counter = 0
+        generated_c2 = ""
+
         for line in generated_c.splitlines():
 
             if '{' in line:

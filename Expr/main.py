@@ -4,6 +4,7 @@ from Expr.Compiler import CodeGenerator
 from ExprLexer import ExprLexer
 from ExprParser import ExprParser
 from ErrorHandling import ErrorHandling
+from tabulation import AddTabulation
 
 with open('input.txt') as f:
     input_code = f.read()
@@ -21,10 +22,8 @@ try:
 except Exception as e:
     print(e)
 
-tab_counter = 0
 generated_c = CodeGenerator().visit(tree)
-generated_c2 = ""
-
+generated_c2 = AddTabulation().tabulation(generated_c)
 
 with open("output.c", "w") as f:
     f.write(generated_c2)
