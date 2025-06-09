@@ -60,6 +60,7 @@
             <div class="header-buttons">
                 <span class="skill-tag" id="compile-btn">Kompiluj</span>
                 <button id="load-btn">Wczytaj z pliku</button>
+                <input type="file" id="file-input" style="display:none" accept=".txt,.giava,.java,.c"/>
                 <button id="save-btn">Zapisz do pliku</button>
             </div>
         </header>
@@ -126,6 +127,32 @@
                 document.getElementById("output").textContent = data.output;
             });
         });
+            // Wczytaj z pliku
+    document.getElementById("load-btn").addEventListener("click", () => {
+        document.getElementById("file-input").click();
+    });
+
+    document.getElementById("file-input").addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            editor.setValue(e.target.result);
+        };
+        reader.readAsText(file);
+    });
+
+    // Zapisz do pliku
+    document.getElementById("save-btn").addEventListener("click", () => {
+        // const text = editor.getValue();
+        const text = document.getElementById("output").textContent
+        const blob = new Blob([text], { type: "text/plain" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "input.txt";
+        a.click();
+        URL.revokeObjectURL(a.href);
+    });
     </script>
 
 
