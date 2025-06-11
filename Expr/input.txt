@@ -1,0 +1,56 @@
+Funzione principale()
+inizio
+
+    Intero array[100];
+    Intero n;
+    Scriviere("Inserisci il numero di elementi: ");
+    Caricare("$n",Intero);
+
+    per i:= 0 a' n - 1 fai
+    inizio
+        Caricare("$array[i]", Intero);
+    fine;
+
+    quicksort(array, 0, n - 1);
+
+    per i:= 0 a' n - 1 fai
+    inizio
+        Scriviere("$array[i]", Intero);
+        Scriviere(" ");
+    fine;
+
+fine;
+
+Funzione quicksort(Intero array[], Intero inizio1 ,Intero fine1) no ritorna
+inizio
+
+    se inizio1 < fine1 fai
+    inizio
+
+        Intero pivot := array[fin];
+        Intero indice := inizio1 - 1;
+
+        per i := inizio1 a' fine1 - 1 fai
+        inizio
+
+            se array[i] < pivot fai
+            inizio
+
+                indice := indice + 1;
+                swap(array[indice], array[i]);
+            fine;
+        fine;
+            swap(array[indice + 1], array[fin]);
+            Intero partizione := indice + 1;
+
+            quicksort(array, inizio1, partizione - 1);
+            quicksort(array, partizione + 1, fine1);
+    fine;
+fine;
+
+Funzione swap(Intero a,Intero b) no ritorna
+inizio
+    Intero temp := a;
+    a := b;
+    b := temp;
+fine;

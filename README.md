@@ -189,7 +189,7 @@ fine;
 #### Uruchomienie ANTLR4
 - `git clone https://github.com/YourHumbleNarrator/TKiK.git`
 - `cd TKiK`
-- `antlr4 -Dlanguage=Python3 Expr/Expr.g4 -visitor -o gen` (po dokonaniu zmian w pliku Expr/Expr.g4)
+- `antlr4 -Dlanguage=Python3 Expr/Expr.g4 -visitor -o Expr` (po dokonaniu zmian w pliku Expr/Expr.g4)
 - `python -m venv \ścieżka\do\nowego\wirtualnego\środowiska`
 - `...\<środowisko>\Scripts\activate`
 #### Uruchomienie GUI

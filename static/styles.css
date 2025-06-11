@@ -12,6 +12,9 @@
     --text-dark: #1b1918;     /* Darker Gray for light backgrounds if needed */
     --card-bg: #005a2d;       /* Slightly lighter than deep base */
     --glow-color: rgb(1, 124, 63); /* Glow effect color based on secondary accent */
+    --something-something: #339966;
+    --something-something-hover: #ffcc00;
+    --red: #c65353;
 
     /* Transitions */
     --transition-fast: all 0.2s ease-in-out;
@@ -49,11 +52,12 @@ body {
 /* --- Header --- */
 .header {
     background: linear-gradient(120deg, #017c3f 0%, rgba(255, 255, 255, 0.78) 50%, #b22929 100%);
+    /*background: floralwhite;*/
     color: #ebe9da;
     padding: 2.5rem 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: end;
     text-align: center;
     position: relative;
 }
@@ -84,14 +88,15 @@ body {
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .header-text p {
     font-size: 1.2rem;
-    color: var(--text-light);
+    color: var(--primary-deep);
     font-weight: 400;
     opacity: 0.9;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* --- Main Content Layout --- */
@@ -103,7 +108,8 @@ body {
 /* --- Sidebar --- */
 .sidebar {
     width: 100%;
-    background-color: var(--primary-deep); /* Dark background */
+    background-color: var(--red); /* Dark background */
+    /*background-color: var(--primary-deep); */
     padding: 2rem 1.5rem;
     border-right: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
 }
@@ -176,10 +182,11 @@ body {
 
 .skill-tag{
     display: inline-block;
-    background-color: var(--card-bg);
-    color: var(--text-medium);
+    background-color: var(--primary-deep);
+    color: var(--text-dark);
     padding: 0.3rem 0.8rem;
-    margin: 0.2rem;
+    margin: 0.8rem;
+    margin-bottom: -20rem;
     border-radius: 1rem; /* Pill shape */
     font-size: 0.85rem;
     font-weight: 500;
@@ -189,11 +196,11 @@ body {
 }
 
 .skill-tag:hover{
-    background-color: var(--secondary-accent);
-    color: var(--text-light);
+    background-color: var(--text-dark);
+    color: var(--primary-deep);
     transform: scale(1.08) rotate(2deg); /* Scale and slight rotate */
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-    border-color: var(--secondary-accent);
+    border-color: var(--text-dark);
 }
 
 .languages-section ul li {
@@ -209,7 +216,7 @@ body {
 .main-column {
     width: 100%;
     padding: 2rem 1.5rem;
-    background-color: var(--card-bg); /* Slightly lighter background */
+    background-color: var(--something-something); /* Slightly lighter background */
 }
 
 .main-section {
