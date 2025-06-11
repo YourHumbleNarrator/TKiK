@@ -1,3 +1,0 @@
-Errori:
-Function add should return a value (line 12)
-Function printEvenNumbersUpTo18 should not return anything (line 17)
