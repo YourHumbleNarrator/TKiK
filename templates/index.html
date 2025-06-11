@@ -1,45 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Kompilator ANTLR</title>-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">-->
-<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
-<!--</head>-->
-<!--<body>-->
-<!--    <button id="compile-btn">Kompiluj</button>-->
-<!--    <textarea id="editor">//</textarea>-->
-<!--    <pre id="output"></pre>-->
-
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/addon/mode/simple.min.js"></script>-->
-<!--    <script src="{{ url_for('static', filename='mylang.js') }}"></script>-->
-
-
-<!--    <script>-->
-<!--        const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {-->
-<!--            lineNumbers: true,-->
-<!--            mode: "mylang",-->
-<!--            theme: "default"-->
-<!--        });-->
-
-<!--        document.getElementById("compile-btn").addEventListener("click", () => {-->
-<!--            fetch("/compile", {-->
-<!--                method: "POST",-->
-<!--                headers: { "Content-Type": "application/x-www-form-urlencoded" },-->
-<!--                body: `source=${encodeURIComponent(editor.getValue())}`-->
-<!--            })-->
-<!--            .then(res => res.json())-->
-<!--            .then(data => {-->
-<!--                document.getElementById("output").textContent = data.output;-->
-<!--            });-->
-<!--        });-->
-<!--    </script>-->
-<!--</body>-->
-<!--</html>-->
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,9 +17,10 @@
             </div>
             <div class="header-buttons">
                 <span class="skill-tag" id="compile-btn">Kompiluj</span>
-                <button id="load-btn">Wczytaj z pliku</button>
+                <span class="skill-tag" id="load-btn">Wczytaj z pliku</span>
                 <input type="file" id="file-input" style="display:none" accept=".txt,.giava,.java,.c"/>
-                <button id="save-btn">Zapisz do pliku</button>
+                <span class="skill-tag" id="save-btn">Zapisz do pliku</span>
+                <span class="skill-tag" id="white-mode">Dark Mode</span>
             </div>
         </header>
 
@@ -73,7 +32,7 @@
                     <p>
                         W okienku poniżej wpisz, bądź wczytaj z pliku kod programu w języku Giava.
                     </p>
-                    <textarea id="editor"></textarea>
+                    <textarea id="editor"> </textarea>
                 </section>
             </aside>
 
@@ -94,7 +53,7 @@
         </div>
 
         <footer class="footer">
-            I hereby consent to the processing of my personal data included in this application for the purposes of the recruitment process under the Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (GDPR).
+            This is a project by Mateusz Bielówka and Berenike Banek, intended exclusively for educational purposes; commercial use is prohibited.
         </footer>
 
     </div>
@@ -125,7 +84,8 @@
                 document.getElementById("messages").textContent = data.exception || "Kompilacja przebiegła pomyślnie.";
             });
         });
-            // Wczytaj z pliku
+
+    // Wczytaj z pliku
     document.getElementById("load-btn").addEventListener("click", () => {
         document.getElementById("file-input").click();
     });
@@ -147,9 +107,12 @@
         const blob = new Blob([text], { type: "text/plain" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = "input.txt";
+        a.download = "your_code.c";
         a.click();
         URL.revokeObjectURL(a.href);
+    });
+    document.getElementById("white-mode").addEventListener("click", () => {
+            alert("Wszystko musi być czarno na białym");
     });
 
     </script>

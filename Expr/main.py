@@ -1,14 +1,16 @@
 from antlr4 import *
-import sys
 from Expr.Compiler import CodeGenerator
 from Expr.ExprLexer import ExprLexer
 from Expr.ExprParser import ExprParser
 from Expr.ErrorHandling import ErrorHandling
 from Expr.tabulation import AddTabulation
-class Program():
-    def __init__(self,input_path, output_path):
+
+
+class Program:
+    def __init__(self, input_path, output_path):
         self.input_path = input_path
         self.output_path = output_path
+
     def run(self):
         with open(self.input_path, "r") as f:
             input_code = f.read()
@@ -36,5 +38,3 @@ class Program():
 
             with open("output.c", "w") as f:
                 f.write(generated_c2)
-
-

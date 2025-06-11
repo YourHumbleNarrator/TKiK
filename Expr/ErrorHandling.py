@@ -10,7 +10,6 @@ class ErrorHandling(ExprVisitor):
         self.function_name = None
         self.function_line = 0
         self.return_type = None
-        #self.type_specifier = None
         self.number_of_arguments = 0
         self.function_arguments = {}
         self.has_returned = None
@@ -23,7 +22,7 @@ class ErrorHandling(ExprVisitor):
         if self.errors:
             raise Exception("Errori:\n" + "\n".join(self.errors))
 
-    def visitMain_function_definition(self, ctx:ExprParser.Main_function_definitionContext):
+    def visitMain_function_definition(self, ctx: ExprParser.Main_function_definitionContext):
         self.visit(ctx.function_body())
 
     def visitFunction_definition(self, ctx: ExprParser.Function_definitionContext):
@@ -40,7 +39,6 @@ class ErrorHandling(ExprVisitor):
         else:
             self.function_arguments[self.function_name] = 0
         self.has_returned = False
-
         self.visit(ctx.function_body())
 
     def visitFunction_body(self, ctx: ExprParser.Function_bodyContext):
@@ -65,7 +63,7 @@ class ErrorHandling(ExprVisitor):
         if ctx.function_call():
             self.visit(ctx.function_call())
 
-    def visitReturn_statement(self, ctx:ExprParser.Return_statementContext):
+    def visitReturn_statement(self, ctx: ExprParser.Return_statementContext):
         if ctx.RETURN_KW() and not self.return_type:
             line = ctx.RETURN_KW().symbol.line
             self.errors.append(f"This function should not return anything (line {line})")
@@ -104,13 +102,13 @@ class ErrorHandling(ExprVisitor):
         if ctx.math_expression():
             self.visit(ctx.math_expression())
 
-    def visitMath_expression(self, ctx:ExprParser.Math_expressionContext):
+    def visitMath_expression(self, ctx: ExprParser.Math_expressionContext):
         if ctx.term():
             self.visit(ctx.term())
         if ctx.function_call():
             self.visit(ctx.function_call())
 
-    def visitTerm(self, ctx:ExprParser.TermContext):
+    def visitTerm(self, ctx: ExprParser.TermContext):
         if ctx.lvalue():
             self.visit(ctx.lvalue())
 
@@ -119,4 +117,3 @@ class ErrorHandling(ExprVisitor):
             line = ctx.IDENTIFIER().symbol.line
             self.errors.append(f"Function {self.function_name} should receive {self.number_of_arguments} "
                                f"arguments, but it received {len(ctx.expression())} (line {line})")
-

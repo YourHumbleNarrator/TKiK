@@ -3,15 +3,15 @@
 
 /* --- CSS Variables --- */
 :root {
-    --primary-deep: #2A0D45;   /* Deep Indigo/Purple */
-    --primary-accent: #4F46E5; /* Electric Blue */
-    --secondary-accent: #EC4899; /* Vibrant Pink/Magenta */
-    --highlight: #14B8A6;     /* Teal */
-    --text-light: #F3F4F6;     /* Very Light Gray */
-    --text-medium: #9CA3AF;    /* Medium Gray */
-    --text-dark: #1F2937;     /* Darker Gray for light backgrounds if needed */
-    --card-bg: #371A55;       /* Slightly lighter than deep base */
-    --glow-color: rgba(236, 72, 153, 0.7); /* Glow effect color based on secondary accent */
+    --primary-deep: #ebe9da;   /* Deep Indigo/Purple */
+    --primary-accent: #005a2d; /* Electric Blue */
+    --secondary-accent: #017c3f; /* Vibrant Pink/Magenta */
+    --highlight: #c5ae53;     /* Teal */
+    --text-light: rgb(58, 35, 28);     /* Very Light Gray */
+    --text-medium: #808085;    /* Medium Gray */
+    --text-dark: #1b1918;     /* Darker Gray for light backgrounds if needed */
+    --card-bg: #005a2d;       /* Slightly lighter than deep base */
+    --glow-color: rgb(1, 124, 63); /* Glow effect color based on secondary accent */
 
     /* Transitions */
     --transition-fast: all 0.2s ease-in-out;
@@ -48,8 +48,8 @@ body {
 
 /* --- Header --- */
 .header {
-    background: linear-gradient(135deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
-    color: #ffffff;
+    background: linear-gradient(120deg, #017c3f 0%, rgba(255, 255, 255, 0.78) 50%, #b22929 100%);
+    color: #ebe9da;
     padding: 2.5rem 1.5rem;
     display: flex;
     flex-direction: column;
@@ -227,7 +227,7 @@ body {
 }
 
 .main-section h2:hover {
-    border-bottom-color: var(--secondary-accent); /* Change border color on hover */
+    border-bottom-color: var(--text-light); /* Change border color on hover */
 }
 
 .main-section h3 {
@@ -258,7 +258,7 @@ body {
     transform: translateY(-6px) scale(1.01); /* Lift and slight scale */
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
     border-color: var(--secondary-accent);
-    background-color: #401f68; /* Slightly lighten card background on hover */
+    background-color: #ffffff; /* Slightly lighten card background on hover */
 }
 
 /* Experience Section Specifics */
