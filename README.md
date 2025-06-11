@@ -178,4 +178,19 @@ fine;
 ```
 
 ## 🔎 Instrukcja obsługi
-work in progress
+#### Wymagania:
+- Python 3.12
+- pip
+#### Instalacja ANTLR4
+- pobierz plik jar https://www.antlr.org/download/antlr-4.13.1-complete.jar
+- `pip install antlr4-tools`
+- `pip install antlr4-python3-runtime==4.7`
+- możliwe, że musisz dodać c:\Users\...\AppData\Local\...\LocalCache\local-packages\Python312\Scripts do PATH zmiennych systemowych
+#### Uruchomienie ANTLR4
+- `git clone https://github.com/YourHumbleNarrator/TKiK.git`
+- `cd TKiK`
+- `antlr4 -Dlanguage=Python3 Expr/Expr.g4 -visitor -o gen` (po dokonaniu zmian w pliku Expr/Expr.g4)
+- `python -m venv \ścieżka\do\nowego\wirtualnego\środowiska`
+- `...\<środowisko>\Scripts\activate`
+#### Uruchomienie GUI
+- `python webapp.py`

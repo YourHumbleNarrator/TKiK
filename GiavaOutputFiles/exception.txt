@@ -1,0 +1,3 @@
+Errori:
+Function multiply should receive 2 arguments, but it received 3 (line 5)
+Function multiply should receive 2 arguments, but it received 1 (line 6)
