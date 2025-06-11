@@ -1,4 +1,0 @@
-Funzione principale
-inizio
-	Intero a;
-fine;

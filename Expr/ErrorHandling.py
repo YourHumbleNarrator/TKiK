@@ -1,5 +1,5 @@
-from ExprParser import ExprParser
-from ExprVisitor import ExprVisitor
+from Expr.ExprParser import ExprParser
+from Expr.ExprVisitor import ExprVisitor
 
 
 class ErrorHandling(ExprVisitor):
@@ -119,33 +119,4 @@ class ErrorHandling(ExprVisitor):
             line = ctx.IDENTIFIER().symbol.line
             self.errors.append(f"Function {self.function_name} should receive {self.number_of_arguments} "
                                f"arguments, but it received {len(ctx.expression())} (line {line})")
-
-
-    # def visitType_specifier(self, ctx: ExprParser.Type_specifierContext):
-    #     if ctx.BOOL_TP():
-    #         self.type_specifier = "logical"
-    #     elif ctx.CHAR_TP():
-    #         self.type_specifier = "character"
-    #     else:
-    #         self.type_specifier = "mathematical"
-
-    # def visitExpression(self, ctx: ExprParser.ExpressionContext):
-    #     if ctx.math_expression() and self.type_specifier == "logical":
-    #         line = ctx.math_expression().symbol.line
-    #         self.errors.append(f"You cannot assign a number to a boolean variable (line {line})")
-    #     if ctx.math_expression() and self.type_specifier == "character":
-    #         line = ctx.math_expression().symbol.line
-    #         self.errors.append(f"You cannot assign a number to a char variable (line {line})")
-    #     if ctx.logical_expression() and self.type_specifier == "mathematical":
-    #         line = ctx.math_expression().symbol.line
-    #         self.errors.append(f"You cannot assign a boolean value to a number variable (line {line})")
-    #     if ctx.logical_expression() and self.type_specifier == "character":
-    #         line = ctx.math_expression().symbol.line
-    #         self.errors.append(f"You cannot assign a boolean value to a char variable (line {line})")
-    #     if ctx.CHAR_LITERAL() and self.type_specifier == "mathematical":
-    #         line = ctx.math_expression().symbol.line
-    #         self.errors.append(f"You cannot assign a character to a number variable (line {line})")
-    #     if ctx.CHAR_LITERAL() and self.type_specifier == "logical":
-    #         line = ctx.math_expression().symbol.line
-    #         self.errors.append(f"You cannot assign a character to a boolean variable (line {line})")
 

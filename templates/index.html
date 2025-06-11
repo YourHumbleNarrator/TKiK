@@ -80,10 +80,7 @@
             <main class="main-column">
                 <section class="main-section card fade-in" id="section1">
                     <h2>Komunikaty</h2>
-                    <p>
-                        Kompilacja przebiegła pomyślnie./Błąd kompilacji linijka...
-                    </p>
-
+                    <pre id="messages"></pre>
                 </section>
 
                 <section class="main-section card fade-in" id="section2">
@@ -125,6 +122,7 @@
             .then(res => res.json())
             .then(data => {
                 document.getElementById("output").textContent = data.output;
+                document.getElementById("messages").textContent = data.exception || "Kompilacja przebiegła pomyślnie.";
             });
         });
             // Wczytaj z pliku
@@ -153,6 +151,7 @@
         a.click();
         URL.revokeObjectURL(a.href);
     });
+
     </script>
 
 

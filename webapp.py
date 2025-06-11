@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-import subprocess
+from Expr.main import Program
+import os
 
 app = Flask(__name__)
 
@@ -10,15 +11,31 @@ def index():
 @app.route("/compile", methods=["POST"])
 def compile_code():
     source_code = request.form["source"]
-    with open("input.txt", "w") as f:
+    with open("Expr/input.txt", "w") as f:
         f.write(source_code)
+    open("output.c", "w").close()
+    open("exception.txt", "w").close()
+    exception_msg = " "
+    output_code = " "
 
-    subprocess.run(["python", "Expr/compiler.py", "Expr/ErrorHandling.py"], check=True)
+    # try:
+    prog = Program("Expr/input.txt", "output.c")
+    prog.run()
+    if os.path.exists("output.c"):
+        with open("output.c", "r") as f:
+            output_code = f.read()
+    if os.path.exists("exception.txt"):
+        with open("exception.txt", "r") as f:
+            exception_msg = f.read()
+    # except Exception as e:
+    #     exception_msg = str(e)
 
-    with open("output.c", "r") as f:
-        output_code = f.read()
+    return jsonify({"output": output_code, "exception": exception_msg})
 
-    return jsonify({"output": output_code})
 
 if __name__ == "__main__":
+    with open("output.c", "w") as f:
+        pass
+    with open("exception.txt", "w") as f:
+        pass
     app.run(debug=True)
