@@ -1,4 +1,21 @@
-Funzione principale
+Funzione principale()
 inizio
-	Intero a;
+
+    Booleano falseValue := 0;
+    Booleano trueValue := subtract(6, 5, 0);
+    Intero x := multiply(1);
+    Flottante randomNumber := Falso;
+
+fine;
+
+Funzione subtract(Piccolo a, Piccolo b) ritorna Piccolo
+inizio
+    Piccolo result := a-b;
+    ritorna result;
+fine;
+
+Funzione multiply(Flottante a, Flottante b) ritorna Flottante
+inizio
+    Flottante result := a*b;
+    ritorna result;
 fine;

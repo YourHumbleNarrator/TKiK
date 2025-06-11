@@ -22,7 +22,7 @@ try:
     checker.visit(tree)
 except Exception as e:
     exception = True
-    with open("exception.txt", "w") as f:
+    with open("GiavaOutputFiles/exception.txt", "w") as f:
         f.write(str(e))
     print(e)
 
@@ -30,5 +30,5 @@ if not exception:
     generated_c = CodeGenerator().visit(tree)
     generated_c2 = AddTabulation().tabulation(generated_c)
 
-    with open("output.c", "w") as f:
+    with open("GiavaInputFiles/output.c", "w") as f:
         f.write(generated_c2)
