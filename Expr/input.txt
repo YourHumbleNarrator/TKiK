@@ -1,56 +1,46 @@
 Funzione principale()
 inizio
 
-    Intero array[100];
-    Intero n;
-    Scriviere("Inserisci il numero di elementi: ");
-    Caricare("$n",Intero);
+    Scriviere("Test math functions here");
+    Intero array[5];
 
-    per i:= 0 a' n - 1 fai
+    per i:= 0 a' 5 fai
     inizio
         Caricare("$array[i]", Intero);
     fine;
 
-    quicksort(array, 0, n - 1);
+    Intero max := max(array, 5);
+    insert(array, 5, 100, 2);
 
-    per i:= 0 a' n - 1 fai
+    Scriviere("$max", Intero);
+    per i:= 0 a' 5 fai
     inizio
         Scriviere("$array[i]", Intero);
-        Scriviere(" ");
     fine;
 
 fine;
 
-Funzione quicksort(Intero array[], Intero inizio1 ,Intero fine1) no ritorna
+Funzione max(Intero array[], Intero length) ritorna Intero
 inizio
-
-    se inizio1 < fine1 fai
+    Intero max := -10000;
+    per i := 0 a' length fai
     inizio
-
-        Intero pivot := array[fin];
-        Intero indice := inizio1 - 1;
-
-        per i := inizio1 a' fine1 - 1 fai
+        se array[i] > max fai
         inizio
-
-            se array[i] < pivot fai
-            inizio
-
-                indice := indice + 1;
-                swap(array[indice], array[i]);
-            fine;
+            max := array[i];
         fine;
-            swap(array[indice + 1], array[fin]);
-            Intero partizione := indice + 1;
-
-            quicksort(array, inizio1, partizione - 1);
-            quicksort(array, partizione + 1, fine1);
     fine;
+    ritorna max;
 fine;
 
-Funzione swap(Intero a,Intero b) no ritorna
+Funzione insert(Intero array[], Intero length, Intero value, Intero index) no ritorna
 inizio
-    Intero temp := a;
-    a := b;
-    b := temp;
+    per i := 0 a' length fai
+    inizio
+        se i = index fai
+        inizio
+            array[i] := value;
+            ferma;
+        fine;
+    fine;
 fine;

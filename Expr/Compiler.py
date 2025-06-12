@@ -6,7 +6,23 @@ class CodeGenerator(ExprVisitor):
         header = ["#define bool int\n#include <stdio.h>"]
         main_code = self.visit(ctx.main_function_definition())
         additional_funcs = [self.visit(f) for f in ctx.function_definition()]
-        return "\n\n".join(header + additional_funcs + [main_code])
+
+        swap_funcs = []
+        if self.swap_int:
+            swap_funcs.append(self.swap_func_string("int"))
+        elif self.swap_float:
+            swap_funcs.append(self.swap_func_string("float"))
+        elif self.swap_double:
+            swap_funcs.append(self.swap_func_string("double"))
+        elif self.swap_long:
+            swap_funcs.append(self.swap_func_string("long"))
+        elif self.swap_short:
+            swap_funcs.append(self.swap_func_string("short"))
+        elif self.swap_char:
+            swap_funcs.append(self.swap_func_string("char"))
+        elif self.swap_bool:
+            swap_funcs.append(self.swap_func_string("bool"))
+        return "\n\n".join(header + swap_funcs + additional_funcs + [main_code])
 
     def visitMain_function_definition(self, ctx):
         params = self.visit(ctx.parameter_list()) if ctx.parameter_list() else ""
@@ -113,6 +129,23 @@ return 0;
         else:
             specifier = "c"
         return f"scanf(\"%{specifier}\", &{self.visit(ctx.lvalue())});"
+
+    def visitSwap_function(self, ctx):
+        if ctx.type_specifier() == "short":
+            self.swap_short = True
+        elif self.visit(ctx.type_specifier()) == "bool":
+            self.swap_bool = True
+        elif self.visit(ctx.type_specifier()) == "int":
+            self.swap_int = True
+        elif self.visit(ctx.type_specifier()) == "float":
+            self.swap_float = True
+        elif self.visit(ctx.type_specifier()) == "double":
+            self.swap_double = True
+        elif self.visit(ctx.type_specifier()) == "long int":
+            self.swap_long = True
+        else:
+            self.swap_char = True
+        return f"swap(&{ctx.lvalue(0).getText()}, &{ctx.lvalue(1).getText()});"
 
     def visitSimple_statement(self, ctx):
         if ctx.local_variable_declaration():

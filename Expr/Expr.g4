@@ -61,6 +61,13 @@ read_function
     RIGHT_PAREN SEMICOLON
     ;
 
+swap_function
+    : SWAP_KW
+    LEFT_PAREN
+    lvalue COMMA lvalue COMMA type_specifier
+    RIGHT_PAREN SEMICOLON
+    ;
+
 statement
     : simple_statement
     | complex_statement
