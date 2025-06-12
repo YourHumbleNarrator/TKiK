@@ -27,7 +27,7 @@ inizio
     se inizio1 < fine1 fai
     inizio
 
-        Intero pivot := array[fin];
+        Intero pivot := array[fine1];
         Intero indice := inizio1 - 1;
 
         per i := inizio1 a' fine1 - 1 fai
@@ -37,20 +37,13 @@ inizio
             inizio
 
                 indice := indice + 1;
-                swap(array[indice], array[i]);
+                Scambiare(array[indice], array[i], Intero);
             fine;
         fine;
-            swap(array[indice + 1], array[fin]);
+            Scambiare(array[indice + 1], array[fine1], Intero);
             Intero partizione := indice + 1;
 
             quicksort(array, inizio1, partizione - 1);
             quicksort(array, partizione + 1, fine1);
     fine;
-fine;
-
-Funzione swap(Intero a,Intero b) no ritorna
-inizio
-    Intero temp := a;
-    a := b;
-    b := temp;
 fine;

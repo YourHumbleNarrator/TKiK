@@ -80,6 +80,7 @@ simple_statement
     | return_statement
     | write_function
     | read_function
+    | swap_function
     ;
 
 complex_statement
@@ -276,6 +277,7 @@ MAIN_KW: 'principale';
 NO_KW: 'no';
 WRITE_KW: 'Scriviere';
 READ_KW: 'Caricare';
+SWAP_KW: 'Scambiare';
 IDENTIFIER: [a-z_] [a-zA-Z0-9_]* ;
 INTEGER_LITERAL: [0-9]+ ;
 FLOAT_LITERAL : [0-9]+'.'[0-9]+ ;

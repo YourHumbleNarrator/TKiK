@@ -2,6 +2,19 @@ from Expr.ExprVisitor import ExprVisitor
 
 
 class CodeGenerator(ExprVisitor):
+    def __init__(self):
+        super().__init__()
+        self.swap_bool = False
+        self.swap_int = False
+        self.swap_float = False
+        self.swap_double = False
+        self.swap_short = False
+        self.swap_long = False
+        self.swap_char = False
+
+    def swap_func_string(self, type1):
+        return f"void swap({type1} *a,{type1} *b) {{\n{type1} tmp;\ntmp = *a;\n*a=*b;\n*b=tmp;\n}}\n"
+
     def visitProgram(self, ctx):
         header = ["#define bool int\n#include <stdio.h>"]
         main_code = self.visit(ctx.main_function_definition())
@@ -160,6 +173,8 @@ return 0;
             return self.visit(ctx.write_function())
         elif ctx.read_function():
             return self.visit(ctx.read_function())
+        elif ctx.swap_function():
+            return self.visit(ctx.swap_function())
         else:
             raise Exception("Unknown statement type")
 
@@ -360,4 +375,3 @@ while ({self.visit(ctx.logical_expression())}) {{
             return "0"
         else:
             raise Exception("Unknown statement type")
-
